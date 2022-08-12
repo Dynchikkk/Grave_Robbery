@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class LightSwitch : MonoBehaviour
 {
-    public GameObject light;
+    public List<GameObject> lights = new List<GameObject>();
 
     public void SwitchLightCondition()
     {
-        light.SetActive(!light.activeSelf);
+        foreach (var light in lights)
+        {
+            light.SetActive(!light.activeSelf);
+        }
     }
 }

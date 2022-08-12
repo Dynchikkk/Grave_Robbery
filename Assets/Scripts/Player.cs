@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
 
         if (Physics.SphereCast(playerPos, interactionFault, playerLook, out hit, interactionDistance))
         {
+            print(hit.transform.gameObject.name);
+
             if (hit.transform.gameObject.TryGetComponent(out LightSwitch switcher))
             {
                 switcher.SwitchLightCondition();
