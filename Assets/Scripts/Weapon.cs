@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class Weapon : Item
 {
-    [SerializeField] private Player _player;
+    [SerializeField] protected Player _player;
 
     private void OnEnable()
     {

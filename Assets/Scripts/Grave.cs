@@ -25,6 +25,17 @@ public class Grave : BaseMonoBehaviour
         //    graveAttribute.treasures.Add(localTreasure);
         //}
     }
+
+    public void TakeDamage(float damage)
+    {
+        graveAttribute.health -= damage;
+        print(graveAttribute.health);
+        if (graveAttribute.health <= 0)
+        {
+            print("Grave excavated");
+            Destroy(gameObject);
+        }
+    }
 }
 
 [System.Serializable]

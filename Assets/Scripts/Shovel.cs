@@ -4,26 +4,40 @@ public abstract class Shovel : Weapon
 {
     public ShovelAttribute shovelAttribute;
 
+    [HideInInspector]
+    public float digCd;
+
     [Header("Interaction attribute")]
     // Sphere radius
     [SerializeField] private float interactionFault;
 
-    private Player _player;
-
     private void Start()
     {
-        _player = Player.Instance;
+        digCd = shovelAttribute.digSpeed;
+    }
+
+    protected virtual void Update()
+    {
+        digCd -= Time.deltaTime;
     }
 
     protected virtual void Dig()
     {
+        if (digCd > 0)
+            return;
+
+        digCd = shovelAttribute.digSpeed;
+
         var cameraTransform = Camera.main.transform;
         Vector3 playerPos = cameraTransform.position;
         Vector3 playerLook = cameraTransform.forward;
 
         if (Physics.Raycast(playerPos, playerLook, out RaycastHit hit, shovelAttribute.shovelRange))
         {
-            print(hit.transform.gameObject.name);
+            if (hit.transform.gameObject.TryGetComponent(out Grave grave))
+            {
+                grave.TakeDamage(shovelAttribute.digDamage);
+            }
         }
     }
 }
