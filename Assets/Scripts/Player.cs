@@ -1,21 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Player : MonoBehaviour
 {
-    public Camera playerCamera;
+    [Header("Inventory")]
+    public BaseShovel playerShovel;
 
     [Header("Interaction attribute")]
     public int interactionDistance;
     // Sphere radius
     public float interactionFault;
 
+    [Header("Another")]
+    public Camera playerCamera;
+    public static Player main;
+
+    private void Awake()
+    {
+        main = this;
+        // Временно
+        playerShovel.gameObject.SetActive(true);
+    }
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
             Interact();
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            RightMouseClick();
         }
     }
 
@@ -33,6 +51,15 @@ public class Player : MonoBehaviour
             {
                 switcher.SwitchLightCondition();
             }
+        }
+    }
+
+    public event Action OnRightMouseClick;
+    public void RightMouseClick()
+    {
+        if (OnRightMouseClick != null)
+        {
+            OnRightMouseClick();
         }
     }
 }
