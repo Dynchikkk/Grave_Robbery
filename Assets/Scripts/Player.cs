@@ -1,30 +1,36 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using Project.Architecture;
 
-public class Player : MonoBehaviour
+public class Player : BaseMonoBehaviour
 {
-    [Header("Inventory")]
-    public BaseShovel playerShovel;
+    public Action<Weapon> OnUseItemAction;
+
+    [SerializeField] private List<Weapon> _weapons;
+    [SerializeField] private Weapon _selectedWeapon;
 
     [Header("Interaction attribute")]
-    public int interactionDistance;
+    [SerializeField] private int interactionDistance;
     // Sphere radius
-    public float interactionFault;
+    [SerializeField] private float interactionFault;
 
     [Header("Another")]
-    public Camera playerCamera;
-    public static Player main;
+    [SerializeField] private Camera _ñamera;
+    public static Player Instance;
 
-    private void Awake()
+    protected override void OnEditorValidate()
     {
-        main = this;
-        // Âðåìåííî
-        playerShovel.gameObject.SetActive(true);
+        base.OnEditorValidate();
+        Instance = this;
     }
 
-    public void Update()
+    private void OnEnable()
+    {
+        SelectDefaultWeapon();
+    }
+
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -33,33 +39,53 @@ public class Player : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            RightMouseClick();
+            UseWeapon();
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            SelectWeapon(0);
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            SelectWeapon(1);
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            SelectWeapon(2);
     }
 
-    public void Interact()
+    private void UseWeapon()
     {
-        RaycastHit hit;
-        Vector3 playerPos = playerCamera.transform.position;
-        Vector3 playerLook = playerCamera.transform.forward;
+        print("use weapon");
+        OnUseItemAction?.Invoke(_selectedWeapon);
+    }
 
-        if (Physics.SphereCast(playerPos, interactionFault, playerLook, out hit, interactionDistance))
+    private void Interact()
+    {
+        var cameraTransform = _ñamera.transform;
+        Vector3 playerPos = cameraTransform.position;
+        Vector3 playerLook = cameraTransform.forward;
+
+        if (Physics.SphereCast(playerPos, interactionFault, playerLook, out RaycastHit hit, interactionDistance))
         {
             print(hit.transform.gameObject.name);
 
-            if (hit.transform.gameObject.TryGetComponent(out LightSwitch switcher))
-            {
-                switcher.SwitchLightCondition();
-            }
+            //if (hit.transform.gameObject.TryGetComponent(out LightSwitch switcher))
+            //{
+            //    switcher.SwitchLightCondition();
+            //}
         }
     }
 
-    public event Action OnRightMouseClick;
-    public void RightMouseClick()
+    private void SelectWeapon(int index)
     {
-        if (OnRightMouseClick != null)
-        {
-            OnRightMouseClick();
-        }
+        if (_weapons.Count <= index || _weapons[index] is null)
+            return;
+        _selectedWeapon.gameObject.SetActive(false);
+        _selectedWeapon = _weapons[index];
+        _selectedWeapon.gameObject.SetActive(true);
+    }
+
+    private void SelectDefaultWeapon()
+    {
+        foreach (var weapon in _weapons)
+            weapon?.gameObject.SetActive(false);
+        SelectWeapon(0);
     }
 }
