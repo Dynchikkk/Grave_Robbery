@@ -16,7 +16,7 @@ public class Player : BaseMonoBehaviour
     [SerializeField] private float interactionFault;
 
     [Header("Another")]
-    [SerializeField] private Camera _ñamera;
+    [SerializeField] private Camera _camera;
     public static Player Instance;
 
     protected override void OnEditorValidate()
@@ -58,7 +58,7 @@ public class Player : BaseMonoBehaviour
 
     private void Interact()
     {
-        var cameraTransform = _ñamera.transform;
+        var cameraTransform = _camera.transform;
         Vector3 playerPos = cameraTransform.position;
         Vector3 playerLook = cameraTransform.forward;
 
