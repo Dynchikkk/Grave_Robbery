@@ -17,14 +17,7 @@ public class Player : BaseMonoBehaviour
 
     [Header("Another")]
     [SerializeField] private Camera _camera;
-    public static Player Instance;
-
-    protected override void OnEditorValidate()
-    {
-        base.OnEditorValidate();
-        Instance = this;
-    }
-
+    
     private void OnEnable()
     {
         SelectDefaultWeapon();
@@ -34,7 +27,7 @@ public class Player : BaseMonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Interact();
+            //Interact();
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -54,23 +47,6 @@ public class Player : BaseMonoBehaviour
     {
         print("use weapon");
         OnUseItemAction?.Invoke(_selectedWeapon);
-    }
-
-    private void Interact()
-    {
-        var cameraTransform = _camera.transform;
-        Vector3 playerPos = cameraTransform.position;
-        Vector3 playerLook = cameraTransform.forward;
-
-        if (Physics.SphereCast(playerPos, interactionFault, playerLook, out RaycastHit hit, interactionDistance))
-        {
-            print(hit.transform.gameObject.name);
-
-            //if (hit.transform.gameObject.TryGetComponent(out LightSwitch switcher))
-            //{
-            //    switcher.SwitchLightCondition();
-            //}
-        }
     }
 
     private void SelectWeapon(int index)

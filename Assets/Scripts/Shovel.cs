@@ -2,52 +2,51 @@ using UnityEngine;
 
 public abstract class Shovel : Weapon
 {
-    public ShovelAttribute shovelAttribute;
+	public ShovelAttribute shovelAttribute;
+	
+	public float DigCd { get; protected set; }
+	
+	[Header("Interaction attribute")]
+	// Sphere radius
+	[SerializeField] protected float _interactionFault;
 
-    [HideInInspector]
-    public float digCd;
+	private void Start()
+	{
+		DigCd = shovelAttribute.digSpeed;
+	}
 
-    [Header("Interaction attribute")]
-    // Sphere radius
-    [SerializeField] private float interactionFault;
+	protected virtual void Update()
+	{
+		DigCd -= Time.deltaTime;
+	}
 
-    private void Start()
-    {
-        digCd = shovelAttribute.digSpeed;
-    }
+	protected virtual void Dig()
+	{
+		if (DigCd > 0)
+			return;
 
-    protected virtual void Update()
-    {
-        digCd -= Time.deltaTime;
-    }
+		DigCd = shovelAttribute.digSpeed;
 
-    protected virtual void Dig()
-    {
-        if (digCd > 0)
-            return;
+		var cameraTransform = Camera.main.transform;
+		Vector3 playerPos = cameraTransform.position;
+		Vector3 playerLook = cameraTransform.forward;
 
-        digCd = shovelAttribute.digSpeed;
-
-        var cameraTransform = Camera.main.transform;
-        Vector3 playerPos = cameraTransform.position;
-        Vector3 playerLook = cameraTransform.forward;
-
-        if (Physics.Raycast(playerPos, playerLook, out RaycastHit hit, shovelAttribute.shovelRange))
-        {
-            if (hit.transform.gameObject.TryGetComponent(out Grave grave))
-            {
-                grave.TakeDamage(shovelAttribute.digDamage);
-            }
-        }
-    }
+		if (Physics.Raycast(playerPos, playerLook, out RaycastHit hit, shovelAttribute.shovelRange))
+		{
+			if (hit.transform.gameObject.TryGetComponent(out Grave grave))
+			{
+				grave.TakeDamage(shovelAttribute.digDamage);
+			}
+		}
+	}
 }
 
 [System.Serializable]
 public class ShovelAttribute
 {
-    public string name;
-    public float digDamage;
-    public float digSpeed;
-    // Length you can dig
-    public float shovelRange; 
+	public string name;
+	public float digDamage;
+	public float digSpeed;
+	// Length you can dig
+	public float shovelRange; 
 }
