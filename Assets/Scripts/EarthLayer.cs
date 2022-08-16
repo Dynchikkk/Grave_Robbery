@@ -10,7 +10,7 @@ public abstract class EarthLayer : BaseMonoBehaviour
     public float Health
     {
         get => _health;
-        protected set
+        set
         {
             _health = value;
             if (_health <= 0)
@@ -20,7 +20,7 @@ public abstract class EarthLayer : BaseMonoBehaviour
         }
     }
 
-    [field: SerializeField, Range(0,1)] public float Resistance { get; protected set; }
+    [field: SerializeField, Range(0,1)] public float Resistance { get; set; }
     [field: SerializeField] public float Level { get; protected set; }
 
     public Action<EarthLayer> OnEarthLayerDigOut;
