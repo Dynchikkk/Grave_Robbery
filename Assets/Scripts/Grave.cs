@@ -6,13 +6,15 @@ public abstract class Grave : BaseMonoBehaviour
 {
     [Header("Base Grave Attrubutes")]
     [SerializeField] protected int _exp;
-    [SerializeField] protected float _depth;
+    [SerializeField] protected int _depth;
     [SerializeField] protected List<EarthLayer> _earthLayers = new();
     [SerializeField] protected List<Loot> _loot = new();
     [SerializeField] protected List<GameObject> _layerPrefabs = new();
     [SerializeField] protected GameObject _layerParent;
     [Tooltip("Layer shift by Y")]
     [SerializeField] protected float _shift;
+    [SerializeField] protected GameObject _floor;
+    [SerializeField] protected GameObject _wall;
 
     [Header("Layers Attributes")]
     [Header("Hp")]
@@ -31,12 +33,7 @@ public abstract class Grave : BaseMonoBehaviour
     protected virtual void OnEnable()
     {
         InstantiateLayers();
-
-        //foreach (EarthLayer layer in _earthLayers)
-        //{
-        //    layer.Grave = this;
-        //    layer.OnEarthLayerDigOut += DigOut;
-        //}
+        InstantiateWallsAndFloor();
     }
 
     protected void OnDisable()
@@ -54,7 +51,8 @@ public abstract class Grave : BaseMonoBehaviour
         Destroy(earthLayer.gameObject);
         if (_earthLayers.Count > 0)
             return;
-        Destroy(gameObject);
+        print("grave Destroy");
+        //Destroy(gameObject);
     }
 
     protected void InstantiateLayers()
@@ -84,5 +82,27 @@ public abstract class Grave : BaseMonoBehaviour
 
             _earthLayers.Add(newLayer);
         }
+    }
+
+    protected void InstantiateWallsAndFloor()
+    {
+        for (int i = 0; i < _depth; i++)
+        {
+            GameObject wall = Instantiate(_wall, _earthLayers[i].transform);
+            wall.transform.parent = _earthLayers[i].transform.parent.parent;
+            foreach (var mat in wall.GetComponentsInChildren<MeshRenderer>())
+                mat.material = _earthLayers[i].GetComponent<MeshRenderer>().material;
+
+            // Временно
+            wall.transform.localScale = new Vector3(1, 1, 1);
+        }
+
+        int floorNum = _depth - 1;
+
+        GameObject floor = Instantiate(_floor, _earthLayers[floorNum].transform);
+        floor.transform.parent = _earthLayers[floorNum].transform.parent.parent;
+        floor.GetComponentInChildren<MeshRenderer>().material = _earthLayers[floorNum].GetComponent<MeshRenderer>().material;
+        // Временно
+        floor.transform.localScale = new Vector3(1, 1, 1);
     }
 }

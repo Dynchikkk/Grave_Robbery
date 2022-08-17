@@ -53,7 +53,9 @@ MonoBehaviour:
   _layerPrefabs:
   - {fileID: 6512166465288169280, guid: 4babe8b3f0dda8c4a84f44fd8ae0e28b, type: 3}
   _layerParent: {fileID: 8865702719375164150}
-  _shift: 0.5
+  _shift: 0.1
+  _floor: {fileID: 3307818156761967145, guid: 90bd2c1967e996940a406acf59441973, type: 3}
+  _wall: {fileID: 6380249997736347675, guid: 0082cd4e0a5614046b560120a7bff000, type: 3}
   _middleLayerHp: 100
   _layerHpDeviation: 0.1
   _middleLayerResistance: 0.3
