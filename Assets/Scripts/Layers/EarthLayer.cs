@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class EarthLayer : BaseMonoBehaviour
 {
+    [field: Header("Base Attribute")]
     [field: SerializeField] public Grave Grave { get; set; }
     [SerializeField] private float _health;
 

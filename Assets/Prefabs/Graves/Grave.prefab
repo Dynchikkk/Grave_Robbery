@@ -47,13 +47,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _exp: 0
-  _depth: 2
+  _depth: 4
   _earthLayers: []
   _loot: []
   _layerPrefabs:
   - {fileID: 6512166465288169280, guid: 4babe8b3f0dda8c4a84f44fd8ae0e28b, type: 3}
+  - {fileID: 4652730224699970345, guid: 70337fae1fca00e4c9bd6bc1e7531e41, type: 3}
   _layerParent: {fileID: 8865702719375164150}
-  _shift: 0.1
+  _shift: 0.5
   _floor: {fileID: 3307818156761967145, guid: 90bd2c1967e996940a406acf59441973, type: 3}
   _wall: {fileID: 6380249997736347675, guid: 0082cd4e0a5614046b560120a7bff000, type: 3}
   _middleLayerHp: 100

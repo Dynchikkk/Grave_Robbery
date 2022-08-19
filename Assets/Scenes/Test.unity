@@ -1381,8 +1381,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 536752861488536729, guid: b2a6590a3e9f98d4289f8aa6b0bc9da1, type: 3}
-      propertyPath: _depth
-      value: 4
+      propertyPath: _shift
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 536752861488536731, guid: b2a6590a3e9f98d4289f8aa6b0bc9da1, type: 3}
       propertyPath: m_Name
