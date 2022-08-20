@@ -20,7 +20,7 @@ public class Player : BaseMonoBehaviour
     
     private void OnEnable()
     {
-        SelectDefaultWeapon();
+        SelectDefaultWeapon();  
     }
 
     private void Update()

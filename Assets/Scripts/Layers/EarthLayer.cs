@@ -29,7 +29,6 @@ public abstract class EarthLayer : BaseMonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         Health -= RecalculateDamage(damage);
-        print(Health);
     }
 
     protected virtual float RecalculateDamage(float damage)
@@ -45,6 +44,6 @@ public abstract class EarthLayer : BaseMonoBehaviour
 
     protected virtual void DigIn()
     {
-        print("Grave excavated");
+        print("Grave excavated in progress");
     }
 }

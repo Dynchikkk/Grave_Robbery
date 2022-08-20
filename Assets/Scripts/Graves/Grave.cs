@@ -6,7 +6,7 @@ public abstract class Grave : BaseMonoBehaviour
 {
     [Header("Base Grave Attrubutes")]
     [SerializeField] protected int _exp;
-    [SerializeField] protected int _depth;
+    public int depth;
     [SerializeField] protected List<EarthLayer> _earthLayers = new();
     [SerializeField] protected List<Loot> _loot = new();
     [SerializeField] protected List<GameObject> _layerPrefabs = new();
@@ -20,20 +20,19 @@ public abstract class Grave : BaseMonoBehaviour
     [Header("Hp")]
 
     [Tooltip("Average HP")]
-    [SerializeField] protected float _middleLayerHp;
+    public float middleLayerHp;
     [Tooltip("Deviation of HP from the average value (%)")] 
     [SerializeField, Range(0, 1)] protected float _layerHpDeviation;
 
     [Header("Resistance")]
     [Tooltip("Average Resistance")] 
-    [SerializeField, Range(0, 1)] protected float _middleLayerResistance;
+    [Range(0, 1)] public float middleLayerResistance;
     [Tooltip("Deviation of Resistance from the average value (%)")] 
     [SerializeField, Range(0, 1)] protected float _layerResistanceDeviation;
 
     protected virtual void OnEnable()
     {
-        InstantiateLayers();
-        InstantiateWallsAndFloor();
+        MainLogic.main.allGraves.Add(this);
     }
 
     protected void OnDisable()
@@ -55,38 +54,40 @@ public abstract class Grave : BaseMonoBehaviour
         //Destroy(gameObject);
     }
 
-    protected void InstantiateLayers()
+    public void InstantiateLayers()
     {
         // Earth width
         float _layerWidth = _layerPrefabs[0].GetComponent<BoxCollider>().size.y / 10;
         float _yShift = 0;
 
-        for (int i = 0; i < _depth; i++)
+        for (int i = 0; i < depth; i++)
         {
             // Instantiate
             int layerNum = Random.Range(0, _layerPrefabs.Count);
             EarthLayer newLayer = Instantiate(_layerPrefabs[layerNum], _layerParent.transform).GetComponent<EarthLayer>();
+
+            newLayer.Grave = this;
+            newLayer.OnEarthLayerDigOut += DigOut;
 
             // Move
             newLayer.transform.localPosition += new Vector3(0, _yShift, 0);
             _yShift -= _layerWidth + _shift;
 
             // Calculate Parametres
-            float hpDevation = _middleLayerHp * _layerHpDeviation;
-            float resistanceDevation = _middleLayerResistance * _layerResistanceDeviation;
-            newLayer.Health = _middleLayerHp + Random.Range(-hpDevation, hpDevation);
-            newLayer.Resistance = _middleLayerResistance + Random.Range(-resistanceDevation, resistanceDevation);
-
-            newLayer.Grave = this;
-            newLayer.OnEarthLayerDigOut += DigOut;
+            float hpDevation = middleLayerHp * _layerHpDeviation;
+            float resistanceDevation = middleLayerResistance * _layerResistanceDeviation;
+            newLayer.Health = middleLayerHp + Random.Range(-hpDevation, hpDevation);
+            newLayer.Resistance = middleLayerResistance + Random.Range(-resistanceDevation, resistanceDevation);
 
             _earthLayers.Add(newLayer);
         }
+
+        InstantiateWallsAndFloor();
     }
 
     protected void InstantiateWallsAndFloor()
     {
-        for (int i = 0; i < _depth; i++)
+        for (int i = 0; i < depth; i++)
         {
             GameObject wall = Instantiate(_wall, _earthLayers[i].transform);
             wall.transform.parent = _earthLayers[i].transform.parent.parent;
@@ -97,7 +98,7 @@ public abstract class Grave : BaseMonoBehaviour
             wall.transform.localScale = new Vector3(1, 1, 1);
         }
 
-        int floorNum = _depth - 1;
+        int floorNum = depth - 1;
 
         GameObject floor = Instantiate(_floor, _earthLayers[floorNum].transform);
         floor.transform.parent = _earthLayers[floorNum].transform.parent.parent;
