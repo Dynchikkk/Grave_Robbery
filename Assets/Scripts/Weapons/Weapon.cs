@@ -6,7 +6,7 @@ public abstract class Weapon : Item
 
     private void OnEnable()
     {
-        _player ??= GetComponentInParent<Player>();
+        _player = Player.instance;
 
         _player.OnUseItemAction += UseItem;
     }

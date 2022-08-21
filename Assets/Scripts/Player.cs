@@ -5,7 +5,10 @@ using Project.Architecture;
 
 public class Player : BaseMonoBehaviour
 {
+    public static Player instance;
+
     public Action<Weapon> OnUseItemAction;
+    public event Action OnJumpInteract;
 
     [SerializeField] private List<Weapon> _weapons;
     [SerializeField] private Weapon _selectedWeapon;
@@ -20,20 +23,25 @@ public class Player : BaseMonoBehaviour
     
     private void OnEnable()
     {
+        instance = this;
+
         SelectDefaultWeapon();  
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            //Interact();
-        }
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    //Interact();
+        //}
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            OnJumpInteract?.Invoke();
+        
 
         if (Input.GetMouseButtonDown(0))
-        {
             UseWeapon();
-        }
+        
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
             SelectWeapon(0);
