@@ -6,7 +6,7 @@ using Project.Architecture;
 public class JumpZone : BaseMonoBehaviour
 {
     private Player _player;
-    [SerializeField] GameObject _jumpToPosition;
+    [field: SerializeField] public GameObject JumpToPosition { private get; set; }
 
     private void Awake()
     {
@@ -25,6 +25,6 @@ public class JumpZone : BaseMonoBehaviour
 
     private void ÑontrolledJump()
     {
-        _player.transform.position = _jumpToPosition.transform.position;
+        _player.transform.position = JumpToPosition.transform.position;
     }
 }

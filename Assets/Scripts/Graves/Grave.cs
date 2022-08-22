@@ -30,6 +30,10 @@ public abstract class Grave : BaseMonoBehaviour
     [Tooltip("Deviation of Resistance from the average value (%)")] 
     [SerializeField, Range(0, 1)] protected float _layerResistanceDeviation;
 
+    [Header("Controlled Jump")]
+    [SerializeField] JumpZone _jumpStartPosition;
+    [SerializeField] GameObject _jumpEndPosition;
+
     protected virtual void OnEnable()
     {
         MainLogic.main.allGraves.Add(this);
@@ -56,8 +60,6 @@ public abstract class Grave : BaseMonoBehaviour
 
     public void InstantiateLayers()
     {
-        // Earth width
-        float _layerWidth = _layerPrefabs[0].GetComponent<BoxCollider>().size.y / 10;
         float _yShift = 0;
 
         for (int i = 0; i < depth; i++)
@@ -71,7 +73,7 @@ public abstract class Grave : BaseMonoBehaviour
 
             // Move
             newLayer.transform.localPosition += new Vector3(0, _yShift, 0);
-            _yShift -= _layerWidth + _shift;
+            _yShift -= _shift;
 
             // Calculate Parametres
             float hpDevation = middleLayerHp * _layerHpDeviation;
@@ -83,6 +85,7 @@ public abstract class Grave : BaseMonoBehaviour
         }
 
         InstantiateWallsAndFloor();
+        SetJumpZone();
     }
 
     protected void InstantiateWallsAndFloor()
@@ -105,5 +108,20 @@ public abstract class Grave : BaseMonoBehaviour
         floor.GetComponentInChildren<MeshRenderer>().material = _earthLayers[floorNum].GetComponent<MeshRenderer>().material;
         // Временно
         floor.transform.localScale = new Vector3(1, 1, 1);
+    }
+
+    public void SetJumpZone()
+    {
+        _jumpStartPosition.JumpToPosition = _jumpEndPosition;
+
+        // Calculate grave depth
+        float graveDepth = depth * _shift;
+        float middleOfGrave = -graveDepth / 2;
+
+        // Replace JumpZone
+        _jumpStartPosition.transform.localScale = new Vector3(_jumpStartPosition.transform.localScale.x, graveDepth, _layerPrefabs[0].transform.localScale.z);
+        _jumpStartPosition.gameObject.transform.localPosition = new Vector3(_jumpStartPosition.gameObject.transform.localPosition.x, middleOfGrave,
+            _jumpStartPosition.gameObject.transform.localPosition.z);
+        
     }
 }
