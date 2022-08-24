@@ -1455,7 +1455,13 @@ MonoBehaviour:
   _fullGraves: []
   _allLevels:
   - gravesOnLevel: 1
-    middleGravedepth: 4
+    middleGraveDepth: 4
+    graveDepthDeviation: 3
+    middleLayerHp: 110
+    middleLayerResistance: 0.35
+    layers:
+    - {fileID: 6512166465288169280, guid: 4babe8b3f0dda8c4a84f44fd8ae0e28b, type: 3}
+    - {fileID: 4652730224699970345, guid: 70337fae1fca00e4c9bd6bc1e7531e41, type: 3}
 --- !u!1 &2008295909
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StoneLayer : EarthLayer
+public class StoneLayer : GraveLayer
 {
     [Header("Stone Layer Attribute")]
     [SerializeField] private float _hardness—oefficient;

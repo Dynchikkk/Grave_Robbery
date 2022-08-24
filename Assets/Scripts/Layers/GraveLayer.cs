@@ -2,7 +2,7 @@ using System;
 using Project.Architecture;
 using UnityEngine;
 
-public abstract class EarthLayer : BaseMonoBehaviour
+public abstract class GraveLayer : BaseMonoBehaviour
 {
     [field: Header("Base Attribute")]
     [field: SerializeField] public Grave Grave { get; set; }
@@ -24,11 +24,12 @@ public abstract class EarthLayer : BaseMonoBehaviour
     [field: SerializeField, Range(0,1)] public float Resistance { get; set; }
     [field: SerializeField] public float Level { get; protected set; }
 
-    public Action<EarthLayer> OnEarthLayerDigOut;
+    public Action<GraveLayer> OnEarthLayerDigOut;
 
     public virtual void TakeDamage(float damage)
     {
         Health -= RecalculateDamage(damage);
+        print(Health);
     }
 
     protected virtual float RecalculateDamage(float damage)

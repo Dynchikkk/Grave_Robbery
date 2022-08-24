@@ -47,7 +47,7 @@ public class MainLogic : MonoBehaviour
             Grave rndGrave = localGraveList[rndGraveNum];
             localGraveList.RemoveAt(rndGraveNum);
 
-            rndGrave.depth = currentLevel.middleGravedepth;
+            SetGraveCharacteristic(currentLevel, rndGrave);
             rndGrave.InstantiateLayers();
             _fullGraves.Add(rndGrave);
         }
@@ -55,12 +55,24 @@ public class MainLogic : MonoBehaviour
         InstantiateEmptyGraves(localGraveList, currentLevel);
     }
 
-    public void InstantiateEmptyGraves(List<Grave> emptyGrave, Level curLevel)
+    private void SetGraveCharacteristic(Level curLevel, Grave curGrave)
+    {
+        curGrave.depth = curLevel.middleGraveDepth + Random.Range(-curLevel.graveDepthDeviation, curLevel.graveDepthDeviation);
+        curGrave.middleLayerHp = curLevel.middleLayerHp;
+        curGrave.middleLayerResistance = curLevel.middleLayerResistance;
+        for (int i = 0; i < curLevel.layers.Count; i++)
+        {
+            curGrave.layerPrefabs.Add(curLevel.layers[i]);
+        }
+    }
+
+    private void InstantiateEmptyGraves(List<Grave> emptyGrave, Level curLevel)
     {
         for (int i = 0; i < emptyGrave.Count; i++)
         {
+            SetGraveCharacteristic(curLevel, emptyGrave[i]);
             emptyGrave[i].middleLayerHp = 0;
-            emptyGrave[i].depth = curLevel.middleGravedepth;
+            emptyGrave[i].depth = curLevel.middleGraveDepth;
             emptyGrave[i].InstantiateLayers();
         }
     }

@@ -33,7 +33,7 @@ public abstract class Shovel : Weapon
 
 		if (Physics.Raycast(playerPos, playerLook, out RaycastHit hit, shovelAttribute.shovelRange))
 		{
-			if (hit.transform.gameObject.TryGetComponent(out EarthLayer earthLayer))
+			if (hit.transform.gameObject.TryGetComponent(out GraveLayer earthLayer))
 			{
                 earthLayer.TakeDamage(shovelAttribute.digDamage);
 			}

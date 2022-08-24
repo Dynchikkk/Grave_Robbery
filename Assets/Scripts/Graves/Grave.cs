@@ -7,9 +7,9 @@ public abstract class Grave : BaseMonoBehaviour
     [Header("Base Grave Attrubutes")]
     [SerializeField] protected int _exp;
     public int depth;
-    [SerializeField] protected List<EarthLayer> _earthLayers = new();
+    [SerializeField] protected List<GraveLayer> _earthLayers = new();
     [SerializeField] protected List<Loot> _loot = new();
-    [SerializeField] protected List<GameObject> _layerPrefabs = new();
+    public List<GameObject> layerPrefabs = new();
     [SerializeField] protected GameObject _layerParent;
     [Tooltip("Layer shift by Y")]
     [SerializeField] protected float _shift;
@@ -41,13 +41,13 @@ public abstract class Grave : BaseMonoBehaviour
 
     protected void OnDisable()
     {
-        foreach (EarthLayer layer in _earthLayers)
+        foreach (GraveLayer layer in _earthLayers)
         {
             layer.OnEarthLayerDigOut -= DigOut;
         }
     }
 
-    protected virtual void DigOut(EarthLayer earthLayer)
+    protected virtual void DigOut(GraveLayer earthLayer)
     {
         earthLayer.OnEarthLayerDigOut -= DigOut;
         _earthLayers.Remove(earthLayer);
@@ -65,8 +65,8 @@ public abstract class Grave : BaseMonoBehaviour
         for (int i = 0; i < depth; i++)
         {
             // Instantiate
-            int layerNum = Random.Range(0, _layerPrefabs.Count);
-            EarthLayer newLayer = Instantiate(_layerPrefabs[layerNum], _layerParent.transform).GetComponent<EarthLayer>();
+            int layerNum = Random.Range(0, layerPrefabs.Count);
+            GraveLayer newLayer = Instantiate(layerPrefabs[layerNum], _layerParent.transform).GetComponent<GraveLayer>();
 
             newLayer.Grave = this;
             newLayer.OnEarthLayerDigOut += DigOut;
@@ -76,8 +76,8 @@ public abstract class Grave : BaseMonoBehaviour
             _yShift -= _shift;
 
             // Calculate Parametres
-            float hpDevation = middleLayerHp * _layerHpDeviation;
-            float resistanceDevation = middleLayerResistance * _layerResistanceDeviation;
+            float hpDevation = Mathf.Round(middleLayerHp * _layerHpDeviation);
+            float resistanceDevation =middleLayerResistance * _layerResistanceDeviation;
             newLayer.Health = middleLayerHp + Random.Range(-hpDevation, hpDevation);
             newLayer.Resistance = middleLayerResistance + Random.Range(-resistanceDevation, resistanceDevation);
 
@@ -116,11 +116,11 @@ public abstract class Grave : BaseMonoBehaviour
 
         // Calculate grave depth
         float graveDepth = depth * _shift;
-        float middleOfGrave = -graveDepth / 2;
+        float middleOfGrave = graveDepth / 2;
 
         // Replace JumpZone
-        _jumpStartPosition.transform.localScale = new Vector3(_jumpStartPosition.transform.localScale.x, graveDepth, _layerPrefabs[0].transform.localScale.z);
-        _jumpStartPosition.gameObject.transform.localPosition = new Vector3(_jumpStartPosition.gameObject.transform.localPosition.x, middleOfGrave,
+        _jumpStartPosition.transform.localScale = new Vector3(_jumpStartPosition.transform.localScale.x, graveDepth, layerPrefabs[0].transform.localScale.z);
+        _jumpStartPosition.gameObject.transform.localPosition = new Vector3(_jumpStartPosition.gameObject.transform.localPosition.x, -middleOfGrave,
             _jumpStartPosition.gameObject.transform.localPosition.z);
         
     }
