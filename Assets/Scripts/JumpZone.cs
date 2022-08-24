@@ -15,12 +15,14 @@ public class JumpZone : BaseMonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        _player.OnJumpInteract += ÑontrolledJump;
+        if (other.CompareTag("Player"))
+            _player.OnJumpInteract += ÑontrolledJump;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        _player.OnJumpInteract -= ÑontrolledJump;
+        if (other.CompareTag("Player"))
+            _player.OnJumpInteract -= ÑontrolledJump;
     }
 
     private void ÑontrolledJump()

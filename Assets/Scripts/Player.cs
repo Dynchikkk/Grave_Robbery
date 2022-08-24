@@ -19,7 +19,7 @@ public class Player : BaseMonoBehaviour
     [SerializeField] private float interactionFault;
 
     [Header("Another")]
-    [SerializeField] private Camera _camera;
+    public Camera cam;
     
     private void OnEnable()
     {
