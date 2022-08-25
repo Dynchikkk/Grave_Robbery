@@ -2,33 +2,97 @@ using System.Collections;
 using System.Collections.Generic;
 using Project.Architecture;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : BaseMonoBehaviour
 {
     [SerializeField] private float _viewAngle;
     [SerializeField] private float _viewDistanse;
+    [SerializeField] private float _speed;
+    [SerializeField] private float _stoppingDistance;
 
     private Player _player;
+    private NavMeshAgent _agent;
+    private EnemiesPoint _checkpointParent;
+    private GameObject _currentTarget;
+    private int _curPointNum = 0;
+
     private void Awake()
     {
         _player = Player.instance;
+        _agent = GetComponent<NavMeshAgent>();
+        _checkpointParent = GetComponentInParent<EnemiesPoint>();
+
+        SetStartCharacteristic();
     }
 
-    public void CheckPlayerInFieldOfVision()
+    private void Update()
+    {
+        SetCurrentTarget();
+        CheckPlayerInFieldOfVision();
+    }
+
+    private void SetStartCharacteristic()
+    {
+        _agent.speed = _speed;
+    }
+
+    private void CheckPlayerInFieldOfVision()
     {
         if (Vector3.Angle(transform.forward, _player.transform.position - transform.position) <= _viewAngle)
         {
             RaycastHit hit;
-            Vector3 playerPos = _player.cam.transform.position;
-            Vector3 playerLook = _player.cam.transform.forward;
+            Vector3 pos = transform.position;
+            Vector3 plPos = _player.transform.position - transform.position;
 
-            if (Physics.Raycast(playerPos, playerLook, out hit, _viewDistanse))
+            if (Physics.Raycast(pos, plPos, out hit, _viewDistanse))
             {
                 if (hit.transform.CompareTag("Player") is false)
                     return;
 
                 print("see player");
+                _currentTarget = _player.gameObject;
+            }
+            else
+            {
+                ChoosePoint();
             }
         }
+        else
+        {
+            ChoosePoint();
+        }
+    }
+
+    // Определяем цель
+    private void SetCurrentTarget()
+    {
+        if (_currentTarget == null)
+            ChoosePoint();
+
+        if (Vector3.Distance(transform.position, _currentTarget.transform.position) <= _stoppingDistance)
+        {
+            if (_currentTarget.CompareTag("Player"))
+            {
+                // Тут надо сделать проигрышь
+                print("busted");
+                _player.GetComponent<FirstPersonMovement>().enabled = false;
+            }
+            else
+            {
+                _curPointNum += 1;
+            }
+        }
+
+        _agent.SetDestination(_currentTarget.transform.position);
+    }
+
+    // Смотри на текущую точку по маршруту
+    public void ChoosePoint()
+    {
+        if (_curPointNum >= _checkpointParent.Checkpoints.Count)
+            _curPointNum = 0;
+
+        _currentTarget = _checkpointParent.Checkpoints[_curPointNum];
     }
 }
