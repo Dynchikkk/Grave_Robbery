@@ -4,6 +4,8 @@ using System.Collections.Generic;
 [System.Serializable]
 public class Level
 {
+    public float timePerLevel;
+
     [Header("Graves")]
     [Tooltip("Number of graves per level")]
     public int gravesOnLevel;

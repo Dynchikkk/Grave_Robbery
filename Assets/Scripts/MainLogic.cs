@@ -1,13 +1,31 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Project.Architecture;
+using UnityEngine.UI;
+using TMPro;
 
-public class MainLogic : MonoBehaviour
+public class MainLogic : BaseMonoBehaviour
 {
     public static MainLogic main;
+    public WinLose winLoose;
 
     [Header("Base")]
     public Player player;
+    public bool inLocation;
+
+    [SerializeField] private float _localTime;
+    private float LocalTime
+    {
+        get => _localTime;
+        set
+        {
+            _localTime = value;
+            if (_localTime <= 0)
+            {
+                winLoose.Lose();
+            }
+        }
+    }
 
     [Header("Graves")]
     public List<Grave> allGraves = new List<Grave>();
@@ -16,14 +34,36 @@ public class MainLogic : MonoBehaviour
     [Header("Level")]
     [SerializeField] private List<Level> _allLevels = new List<Level>();
 
+    [Header("UI")]
+    [SerializeField] private TMP_Text timeText;
+
     private void Awake()
     {
         main = this;
+        winLoose = GetComponent<WinLose>();
     }
 
     private void Start()
     {
-        SetGravesOnLevel(0);
+        SetLevel—haracteristic(0);
+    }
+
+    private void Update()
+    {
+        SetTimeText();
+
+        if (inLocation is true)
+        {
+            LocalTime -= Time.deltaTime;
+        }
+    }
+
+    private void SetLevel—haracteristic(int levelNum)
+    {
+        inLocation = false;
+        LocalTime = _allLevels[levelNum].timePerLevel;
+
+        SetGravesOnLevel(levelNum);
     }
 
     public void SetGravesOnLevel(int levelNum)
@@ -75,5 +115,16 @@ public class MainLogic : MonoBehaviour
             emptyGrave[i].depth = curLevel.middleGraveDepth;
             emptyGrave[i].InstantiateLayers();
         }
+    }
+
+    public void SetTimeText()
+    {
+        var time = System.TimeSpan.FromSeconds(LocalTime);
+        string timeStr = string.Concat(time.Minutes, ".", time.Seconds, ".", time.Milliseconds);
+
+        if (time.Milliseconds < 0)
+            timeStr = "0.0.0";
+
+        timeText.text = timeStr;
     }
 }

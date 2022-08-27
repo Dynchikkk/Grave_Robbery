@@ -74,9 +74,8 @@ public class Enemy : BaseMonoBehaviour
         {
             if (_currentTarget.CompareTag("Player"))
             {
-                // Тут надо сделать проигрышь
                 print("busted");
-                _player.GetComponent<FirstPersonMovement>().enabled = false;
+                MainLogic.main.winLoose.Lose();
             }
             else
             {
