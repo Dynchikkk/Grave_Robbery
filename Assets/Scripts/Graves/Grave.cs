@@ -4,8 +4,12 @@ using Project.Architecture;
 
 public abstract class Grave : BaseMonoBehaviour
 {
+    private MainLogic _main;
+
     [Header("Base Grave Attrubutes")]
-    [SerializeField] protected int _exp;
+    public int exp;
+    [Tooltip("Deviation of exp from the average value (%)")]
+    [Range(0, 1)] public float expDeviation;
     public int depth;
     [SerializeField] protected List<GraveLayer> _earthLayers = new();
     [SerializeField] protected List<Loot> _loot = new();
@@ -36,7 +40,13 @@ public abstract class Grave : BaseMonoBehaviour
 
     protected virtual void OnEnable()
     {
-        MainLogic.main.allGraves.Add(this);
+        _main = MainLogic.main;
+        _main.allGraves.Add(this);
+    }
+
+    protected void Start()
+    {
+        SetStartCharaceristic();
     }
 
     protected void OnDisable()
@@ -47,6 +57,11 @@ public abstract class Grave : BaseMonoBehaviour
         }
     }
 
+    protected void SetStartCharaceristic()
+    {
+        exp += System.Convert.ToInt32(Random.Range(-exp * expDeviation, exp * expDeviation));
+    }
+
     protected virtual void DigOut(GraveLayer earthLayer)
     {
         earthLayer.OnEarthLayerDigOut -= DigOut;
@@ -54,6 +69,7 @@ public abstract class Grave : BaseMonoBehaviour
         Destroy(earthLayer.gameObject);
         if (_earthLayers.Count > 0)
             return;
+        _main.player.AddExpPoints(exp);
         print("grave Destroy");
         //Destroy(gameObject);
     }
@@ -77,7 +93,7 @@ public abstract class Grave : BaseMonoBehaviour
 
             // Calculate Parametres
             float hpDevation = Mathf.Round(middleLayerHp * _layerHpDeviation);
-            float resistanceDevation =middleLayerResistance * _layerResistanceDeviation;
+            float resistanceDevation = middleLayerResistance * _layerResistanceDeviation;
             newLayer.Health = middleLayerHp + Random.Range(-hpDevation, hpDevation);
             newLayer.Resistance = middleLayerResistance + Random.Range(-resistanceDevation, resistanceDevation);
 
@@ -122,6 +138,5 @@ public abstract class Grave : BaseMonoBehaviour
         _jumpStartPosition.transform.localScale = new Vector3(_jumpStartPosition.transform.localScale.x, graveDepth, layerPrefabs[0].transform.localScale.z);
         _jumpStartPosition.gameObject.transform.localPosition = new Vector3(_jumpStartPosition.gameObject.transform.localPosition.x, -middleOfGrave,
             _jumpStartPosition.gameObject.transform.localPosition.z);
-        
     }
 }

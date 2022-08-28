@@ -10,6 +10,11 @@ public class Level
     [Tooltip("Number of graves per level")]
     public int gravesOnLevel;
 
+    [Header("Currency")]
+    public int expPerGrave;
+    [Range(0, 1)] public float expPerGraveDeviation;
+
+    [Header("Layers")]
     [Tooltip("Middle grave depth")]
     public int middleGraveDepth;
     [Tooltip("Maximum deviation from average grave depth")]

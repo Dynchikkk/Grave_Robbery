@@ -100,6 +100,8 @@ public class MainLogic : BaseMonoBehaviour
         curGrave.depth = curLevel.middleGraveDepth + Random.Range(-curLevel.graveDepthDeviation, curLevel.graveDepthDeviation);
         curGrave.middleLayerHp = curLevel.middleLayerHp;
         curGrave.middleLayerResistance = curLevel.middleLayerResistance;
+        curGrave.exp = curLevel.expPerGrave;
+        curGrave.expDeviation = curLevel.expPerGraveDeviation;
         for (int i = 0; i < curLevel.layers.Count; i++)
         {
             curGrave.layerPrefabs.Add(curLevel.layers[i]);
@@ -113,6 +115,7 @@ public class MainLogic : BaseMonoBehaviour
             SetGraveCharacteristic(curLevel, emptyGrave[i]);
             emptyGrave[i].middleLayerHp = 0;
             emptyGrave[i].depth = curLevel.middleGraveDepth;
+            emptyGrave[i].exp = 0;
             emptyGrave[i].InstantiateLayers();
         }
     }

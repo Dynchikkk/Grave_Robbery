@@ -2172,8 +2172,10 @@ MonoBehaviour:
   allGraves: []
   _fullGraves: []
   _allLevels:
-  - timePerLevel: 15
-    gravesOnLevel: 1
+  - timePerLevel: 60
+    gravesOnLevel: 2
+    expPerGrave: 20
+    expPerGraveDeviation: 0.1
     middleGraveDepth: 4
     graveDepthDeviation: 3
     middleLayerHp: 110
@@ -2421,6 +2423,10 @@ PrefabInstance:
       propertyPath: _camera
       value: 
       objectReference: {fileID: 1794013445}
+    - target: {fileID: 1441449417, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
+      propertyPath: _expCoefPerLevel
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 1773623360729482, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
       propertyPath: m_Name
       value: First Person Controller

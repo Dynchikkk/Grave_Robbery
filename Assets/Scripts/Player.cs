@@ -10,6 +10,7 @@ public class Player : BaseMonoBehaviour
     public Action<Weapon> OnUseItemAction;
     public event Action OnJumpInteract;
 
+    [Header("Weapons")]
     [SerializeField] private List<Weapon> _weapons;
     [SerializeField] private Weapon _selectedWeapon;
 
@@ -18,7 +19,26 @@ public class Player : BaseMonoBehaviour
     // Sphere radius
     [SerializeField] private float interactionFault;
 
+    [Header("Currency")]
+    [Header("Experience Points")]
+    [SerializeField] private float _expCoefPerLevel;
+    [SerializeField] private int _expToLevelUp = 10;
+    [SerializeField] private int _expPoints = 0;
+    public int ExpPoints
+    {
+        get => _expPoints;
+        set
+        {
+            _expPoints = value;
+            if (_expPoints >= _expToLevelUp)
+            {
+                UpLevel();
+            }
+        }
+    }
+
     [Header("Another")]
+    public int playerLevel = 1;
     public Camera cam;
     
     private void OnEnable()
@@ -30,25 +50,32 @@ public class Player : BaseMonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.E))
-        //{
-        //    //Interact();
-        //}
-
         if (Input.GetKeyDown(KeyCode.Space))
             OnJumpInteract?.Invoke();
         
-
         if (Input.GetMouseButtonDown(0))
             UseWeapon();
         
-
         if (Input.GetKeyDown(KeyCode.Alpha1))
             SelectWeapon(0);
         if (Input.GetKeyDown(KeyCode.Alpha2))
             SelectWeapon(1);
         if (Input.GetKeyDown(KeyCode.Alpha3))
             SelectWeapon(2);
+    }
+
+    public void UpLevel()
+    {
+        int lastCoef = _expToLevelUp;
+        _expToLevelUp = Convert.ToInt32(float.Parse(_expToLevelUp.ToString()) * _expCoefPerLevel);
+        playerLevel += 1;
+        ExpPoints = ExpPoints - lastCoef;
+    }
+
+    public void AddExpPoints(int exp)
+    {
+        print("You earn " + exp.ToString() + "exp");
+        ExpPoints += exp;
     }
 
     private void UseWeapon()
