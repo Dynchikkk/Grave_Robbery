@@ -13,6 +13,9 @@ public class CheckInLocation : BaseMonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag != "Player")
+            return;
+
         if (_firstTime)
         {
             _main.inLocation = true;

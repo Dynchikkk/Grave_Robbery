@@ -12,16 +12,22 @@ public class Enemy : BaseMonoBehaviour
     [SerializeField] private float _stoppingDistance;
 
     private Player _player;
+    private MainLogic _main;
     private NavMeshAgent _agent;
-    private EnemiesPoint _checkpointParent;
+
     private GameObject _currentTarget;
+
     private int _curPointNum = 0;
+    private List<GameObject> _checkpoints = new();
+
 
     private void Awake()
     {
+        _main = MainLogic.main;
         _player = Player.instance;
         _agent = GetComponent<NavMeshAgent>();
-        _checkpointParent = GetComponentInParent<EnemiesPoint>();
+        _main.allEnemies.Add(this);
+        //_checkpointParent = GetComponentInParent<EnemiesPoint>();
 
         SetStartCharacteristic();
     }
@@ -37,6 +43,7 @@ public class Enemy : BaseMonoBehaviour
         _agent.speed = _speed;
     }
 
+    // Не находится ли игрок в поле зрения
     private void CheckPlayerInFieldOfVision()
     {
         if (Vector3.Angle(transform.forward, _player.transform.position - transform.position) <= _viewAngle)
@@ -89,9 +96,17 @@ public class Enemy : BaseMonoBehaviour
     // Смотри на текущую точку по маршруту
     public void ChoosePoint()
     {
-        if (_curPointNum >= _checkpointParent.Checkpoints.Count)
+        if (_curPointNum >= _checkpoints.Count)
             _curPointNum = 0;
 
-        _currentTarget = _checkpointParent.Checkpoints[_curPointNum];
+        _currentTarget = _checkpoints[_curPointNum];
+    }
+
+    public void SetPoints(List<GameObject> points)
+    {
+        for (int i = 0; i < points.Count; i++)
+        {
+            _checkpoints.Add(points[i]);
+        }
     }
 }

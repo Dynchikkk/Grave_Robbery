@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Project.Architecture;
 using UnityEngine.UI;
+using System;
 using TMPro;
 
 public class MainLogic : BaseMonoBehaviour
 {
     public static MainLogic main;
     public WinLose winLoose;
+    public event Action OnLevelSet;
 
     [Header("Base")]
     public Player player;
@@ -33,6 +35,10 @@ public class MainLogic : BaseMonoBehaviour
 
     [Header("Level")]
     [SerializeField] private List<Level> _allLevels = new List<Level>();
+
+    [Header("Enemies")]
+    public List<Enemy> allEnemies = new();
+    public GameObject enemiesParent;
 
     [Header("UI")]
     [SerializeField] private TMP_Text timeText;
@@ -64,6 +70,23 @@ public class MainLogic : BaseMonoBehaviour
         LocalTime = _allLevels[levelNum].timePerLevel;
 
         SetGravesOnLevel(levelNum);
+        SetEnemiesOnLevel(levelNum);
+        OnLevelSet?.Invoke();
+    }
+
+    public void SetEnemiesOnLevel(int levelNum)
+    {
+        Level currentLevel = _allLevels[levelNum];
+
+        for (int i = 0; i < currentLevel.enemiesOnLevel.Count; i++)
+        {
+            var curEnOnLevel = currentLevel.enemiesOnLevel[i];
+            var enPosition = new Vector3(curEnOnLevel.startPosition.transform.position.x, 0,
+                curEnOnLevel.startPosition.transform.position.z);
+            GameObject localEn = Instantiate(curEnOnLevel.enemy.gameObject, curEnOnLevel.startPosition.transform);
+            localEn.transform.SetParent(enemiesParent.transform);
+            print(localEn.transform.localPosition);
+        }
     }
 
     public void SetGravesOnLevel(int levelNum)
@@ -80,7 +103,7 @@ public class MainLogic : BaseMonoBehaviour
 
         for (int i = 0; i < gravesOnLevel; i++)
         {
-            int rndGraveNum = Random.Range(0, localGraveList.Count);
+            int rndGraveNum = UnityEngine.Random.Range(0, localGraveList.Count);
             if (localGraveList.Count <= 0 || localGraveList[rndGraveNum] == null)
                 return;
 
@@ -97,7 +120,7 @@ public class MainLogic : BaseMonoBehaviour
 
     private void SetGraveCharacteristic(Level curLevel, Grave curGrave)
     {
-        curGrave.depth = curLevel.middleGraveDepth + Random.Range(-curLevel.graveDepthDeviation, curLevel.graveDepthDeviation);
+        curGrave.depth = curLevel.middleGraveDepth + UnityEngine.Random.Range(-curLevel.graveDepthDeviation, curLevel.graveDepthDeviation);
         curGrave.middleLayerHp = curLevel.middleLayerHp;
         curGrave.middleLayerResistance = curLevel.middleLayerResistance;
         curGrave.exp = curLevel.expPerGrave;

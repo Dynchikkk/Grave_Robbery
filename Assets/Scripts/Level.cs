@@ -32,4 +32,14 @@ public class Level
 
     [Tooltip("Layer types per level")]
     public List<GameObject> layers = new();
+
+    [Header("Enemies")]
+    public List<EnemyOnLevel> enemiesOnLevel = new();
+}
+
+[System.Serializable]
+public class EnemyOnLevel
+{
+    public Enemy enemy;
+    public GameObject startPosition;
 }
