@@ -81,11 +81,9 @@ public class MainLogic : BaseMonoBehaviour
         for (int i = 0; i < currentLevel.enemiesOnLevel.Count; i++)
         {
             var curEnOnLevel = currentLevel.enemiesOnLevel[i];
-            var enPosition = new Vector3(curEnOnLevel.startPosition.transform.position.x, 0,
-                curEnOnLevel.startPosition.transform.position.z);
             GameObject localEn = Instantiate(curEnOnLevel.enemy.gameObject, curEnOnLevel.startPosition.transform);
             localEn.transform.SetParent(enemiesParent.transform);
-            print(localEn.transform.localPosition);
+            localEn.transform.localPosition = new Vector3(localEn.transform.localPosition.x, 0, localEn.transform.localPosition.z);
         }
     }
 

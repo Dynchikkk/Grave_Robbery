@@ -615,6 +615,7 @@ GameObject:
   - component: {fileID: 70853661858588450}
   - component: {fileID: 70853661858588451}
   - component: {fileID: 70853661858588444}
+  - component: {fileID: 6030837229316039121}
   m_Layer: 0
   m_Name: Dog
   m_TagString: Untagged
@@ -647,7 +648,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70853661858588449}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -334000983
   m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
@@ -674,9 +675,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _viewAngle: 60
-  _viewDistanse: 5
+  _viewDistanse: 7
   _speed: 2
-  _stoppingDistance: 2
+  _stoppingDistance: 1.5
+--- !u!114 &6030837229316039121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70853661858588449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40797284bf4277c4eac4d8d95f56fe8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Method: 3
+  m_Curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5178029
+      value: 1.0038002
+      inSlope: -0.0715729
+      outSlope: -0.0715729
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &70853661900016447
 GameObject:
   m_ObjectHideFlags: 0
