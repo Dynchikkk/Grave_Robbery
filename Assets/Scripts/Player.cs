@@ -6,6 +6,7 @@ using Project.Architecture;
 public class Player : BaseMonoBehaviour
 {
     public static Player instance;
+    private MainLogic _main;
 
     public Action<Weapon> OnUseItemAction;
     public event Action OnJumpInteract;
@@ -24,6 +25,9 @@ public class Player : BaseMonoBehaviour
     [SerializeField] private float _expCoefPerLevel;
     [SerializeField] private int _expToLevelUp = 10;
     [SerializeField] private int _expPoints = 0;
+    [Header("Money")]
+    [SerializeField] private int _playerMoney;
+
     public int ExpPoints
     {
         get => _expPoints;
@@ -44,6 +48,7 @@ public class Player : BaseMonoBehaviour
     private void OnEnable()
     {
         instance = this;
+        _main = MainLogic.main;
 
         SelectDefaultWeapon();  
     }
@@ -69,7 +74,7 @@ public class Player : BaseMonoBehaviour
         int lastCoef = _expToLevelUp;
         _expToLevelUp = Convert.ToInt32(float.Parse(_expToLevelUp.ToString()) * _expCoefPerLevel);
         playerLevel += 1;
-        ExpPoints = ExpPoints - lastCoef;
+        ExpPoints -= lastCoef;
     }
 
     public void AddExpPoints(int exp)
@@ -98,5 +103,16 @@ public class Player : BaseMonoBehaviour
         foreach (var weapon in _weapons)
             weapon?.gameObject.SetActive(false);
         SelectWeapon(0);
+    }
+
+    public void SetLocalMoney(int value)
+    {
+        _playerMoney += value;
+    }
+
+    public void SetLocalToGlobalMoney()
+    {
+        _main.money += _playerMoney;
+        _playerMoney = 0;
     }
 }

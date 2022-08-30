@@ -7,6 +7,9 @@ public abstract class Grave : BaseMonoBehaviour
     private MainLogic _main;
 
     [Header("Base Grave Attrubutes")]
+    public int money;
+    [Tooltip("Deviation of money from the average value (%)")]
+    [Range(0, 1)] public float moneyDeviation;
     public int exp;
     [Tooltip("Deviation of exp from the average value (%)")]
     [Range(0, 1)] public float expDeviation;
@@ -60,6 +63,7 @@ public abstract class Grave : BaseMonoBehaviour
     protected void SetStartCharaceristic()
     {
         exp += System.Convert.ToInt32(Random.Range(-exp * expDeviation, exp * expDeviation));
+        money += System.Convert.ToInt32(Random.Range(-money * moneyDeviation, money * moneyDeviation));
     }
 
     protected virtual void DigOut(GraveLayer earthLayer)
@@ -70,6 +74,7 @@ public abstract class Grave : BaseMonoBehaviour
         if (_earthLayers.Count > 0)
             return;
         _main.player.AddExpPoints(exp);
+        _main.player.SetLocalMoney(money);
         print("grave Destroy");
         //Destroy(gameObject);
     }

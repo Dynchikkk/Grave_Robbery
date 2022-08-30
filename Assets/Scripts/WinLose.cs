@@ -15,6 +15,7 @@ public class WinLose : MonoBehaviour
     {
         print("win");
         _main.inLocation = false;
+        _main.player.SetLocalToGlobalMoney();
     }
 
     public void Lose()

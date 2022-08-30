@@ -6019,6 +6019,7 @@ GameObject:
   - component: {fileID: 1967829030}
   - component: {fileID: 1967829031}
   - component: {fileID: 1967829032}
+  - component: {fileID: 1967829033}
   m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
@@ -6055,6 +6056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winLoose: {fileID: 0}
+  money: 0
   player: {fileID: 2048834304}
   inLocation: 0
   _localTime: 0
@@ -6065,6 +6067,8 @@ MonoBehaviour:
     gravesOnLevel: 2
     expPerGrave: 20
     expPerGraveDeviation: 0.1
+    moneyPerGrave: 10
+    moneyPerGraveDeviation: 0.1
     middleGraveDepth: 4
     graveDepthDeviation: 3
     middleLayerHp: 110
@@ -6092,6 +6096,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950cd2f695a07b74d97a88f4ee1154d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1967829033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967829029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ae84fb3ece6533478b541f8d33a7a61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _allMoney: 0
 --- !u!1 &1977175816 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4142215202734221512, guid: 7f9008489d07b494fb8ae58439666110, type: 3}
@@ -6304,6 +6321,10 @@ PrefabInstance:
       propertyPath: _camera
       value: 
       objectReference: {fileID: 1794013445}
+    - target: {fileID: 1441449417, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
+      propertyPath: _expPoints
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1441449417, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
       propertyPath: _expCoefPerLevel
       value: 1.2

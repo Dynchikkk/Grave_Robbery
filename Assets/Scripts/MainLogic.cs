@@ -5,10 +5,15 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 
+[RequireComponent(typeof(WinLose))]
+[RequireComponent(typeof(Money))]
 public class MainLogic : BaseMonoBehaviour
 {
     public static MainLogic main;
     public WinLose winLoose;
+    public int money;
+
+    //events
     public event Action OnLevelSet;
 
     [Header("Base")]
@@ -47,6 +52,7 @@ public class MainLogic : BaseMonoBehaviour
     {
         main = this;
         winLoose = GetComponent<WinLose>();
+        money = GetComponent<Money>().AllMoney;
     }
 
     private void Start()
@@ -123,6 +129,8 @@ public class MainLogic : BaseMonoBehaviour
         curGrave.middleLayerResistance = curLevel.middleLayerResistance;
         curGrave.exp = curLevel.expPerGrave;
         curGrave.expDeviation = curLevel.expPerGraveDeviation;
+        curGrave.money = curLevel.moneyPerGrave;
+        curGrave.moneyDeviation = curLevel.moneyPerGraveDeviation;
         for (int i = 0; i < curLevel.layers.Count; i++)
         {
             curGrave.layerPrefabs.Add(curLevel.layers[i]);
@@ -133,10 +141,14 @@ public class MainLogic : BaseMonoBehaviour
     {
         for (int i = 0; i < emptyGrave.Count; i++)
         {
-            SetGraveCharacteristic(curLevel, emptyGrave[i]);
+            // Set to zero base constants
+            for (int j = 0; j < curLevel.layers.Count; j++)
+            {
+                emptyGrave[i].layerPrefabs.Add(curLevel.layers[j]);
+            }
             emptyGrave[i].middleLayerHp = 0;
             emptyGrave[i].depth = curLevel.middleGraveDepth;
-            emptyGrave[i].exp = 0;
+
             emptyGrave[i].InstantiateLayers();
         }
     }

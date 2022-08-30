@@ -13,6 +13,8 @@ public class Level
     [Header("Currency")]
     public int expPerGrave;
     [Range(0, 1)] public float expPerGraveDeviation;
+    public int moneyPerGrave;
+    [Range(0, 1)] public float moneyPerGraveDeviation;
 
     [Header("Layers")]
     [Tooltip("Middle grave depth")]
