@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[System.Serializable]
-public class Level
+[CreateAssetMenu(fileName = "New Level", menuName = "Level")]
+public class Level : ScriptableObject
 {
     public float timePerLevel;
 
@@ -43,5 +43,5 @@ public class Level
 public class EnemyOnLevel
 {
     public Enemy enemy;
-    public GameObject startPosition;
+    //public GameObject startPosition;
 }

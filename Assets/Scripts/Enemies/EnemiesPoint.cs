@@ -29,6 +29,8 @@ public class EnemiesPoint : BaseMonoBehaviour
                 if (curEn.name.Replace("(Clone)", "") == curPoint.enemy.name && curPoint.busy is false)
                 {
                     curEn.SetPoints(curPoint.checkpoints);
+                    curEn.transform.localPosition = new Vector3(curPoint.StartPoint.transform.localPosition.x, 0,
+                        curPoint.StartPoint.transform.localPosition.z);
                     curPoint.busy = true;
                     break;
                 }
@@ -42,5 +44,6 @@ public class Points
 {
     public Enemy enemy;
     public bool busy = false;
+    public GameObject StartPoint;
     public List<GameObject> checkpoints = new();
 }

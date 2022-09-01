@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b2d13219af90024c9b873c21fef1872, type: 3}
+  m_Name: FirstLevel
+  m_EditorClassIdentifier: 
+  timePerLevel: 60
+  gravesOnLevel: 3
+  expPerGrave: 10
+  expPerGraveDeviation: 0.1
+  moneyPerGrave: 10
+  moneyPerGraveDeviation: 0.1
+  middleGraveDepth: 5
+  graveDepthDeviation: 2
+  middleLayerHp: 100
+  middleLayerResistance: 0.3
+  layers:
+  - {fileID: 6512166465288169280, guid: 4babe8b3f0dda8c4a84f44fd8ae0e28b, type: 3}
+  - {fileID: 4652730224699970345, guid: 70337fae1fca00e4c9bd6bc1e7531e41, type: 3}
+  enemiesOnLevel:
+  - enemy: {fileID: 70853661858588444, guid: 7a18b14e40576e24288011753824037c, type: 3}
+    startPosition: {fileID: 0}

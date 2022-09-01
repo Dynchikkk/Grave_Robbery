@@ -1773,6 +1773,7 @@ MonoBehaviour:
   _checkpoints:
   - enemy: {fileID: 70853661858588444, guid: 7a18b14e40576e24288011753824037c, type: 3}
     busy: 0
+    StartPoint: {fileID: 2121070634}
     checkpoints:
     - {fileID: 647289686}
     - {fileID: 1444581365}
@@ -1780,6 +1781,7 @@ MonoBehaviour:
     - {fileID: 1706515643}
   - enemy: {fileID: 70853661858588444, guid: 7a18b14e40576e24288011753824037c, type: 3}
     busy: 0
+    StartPoint: {fileID: 255765484}
     checkpoints:
     - {fileID: 1706515643}
     - {fileID: 1916109727}
@@ -6018,8 +6020,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1967829030}
   - component: {fileID: 1967829031}
-  - component: {fileID: 1967829032}
   - component: {fileID: 1967829033}
+  - component: {fileID: 1967829034}
   m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
@@ -6063,39 +6065,10 @@ MonoBehaviour:
   allGraves: []
   _fullGraves: []
   _allLevels:
-  - timePerLevel: 60
-    gravesOnLevel: 2
-    expPerGrave: 20
-    expPerGraveDeviation: 0.1
-    moneyPerGrave: 10
-    moneyPerGraveDeviation: 0.1
-    middleGraveDepth: 4
-    graveDepthDeviation: 3
-    middleLayerHp: 110
-    middleLayerResistance: 0.35
-    layers:
-    - {fileID: 6512166465288169280, guid: 4babe8b3f0dda8c4a84f44fd8ae0e28b, type: 3}
-    - {fileID: 4652730224699970345, guid: 70337fae1fca00e4c9bd6bc1e7531e41, type: 3}
-    enemiesOnLevel:
-    - enemy: {fileID: 70853661858588444, guid: 7a18b14e40576e24288011753824037c, type: 3}
-      startPosition: {fileID: 2121070634}
-    - enemy: {fileID: 70853661858588444, guid: 7a18b14e40576e24288011753824037c, type: 3}
-      startPosition: {fileID: 255765484}
+  - {fileID: 11400000, guid: a96b92b1e6e62824bb5d05fe47ade595, type: 2}
   allEnemies: []
   enemiesParent: {fileID: 541392540}
   timeText: {fileID: 205013264}
---- !u!114 &1967829032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1967829029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 950cd2f695a07b74d97a88f4ee1154d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1967829033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6109,6 +6082,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _allMoney: 0
+--- !u!114 &1967829034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967829029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66fa0e194ea21304b9e12aed4e551b66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1977175816 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4142215202734221512, guid: 7f9008489d07b494fb8ae58439666110, type: 3}
