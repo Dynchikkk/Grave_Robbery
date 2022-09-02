@@ -30,9 +30,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4431097740408640681}
+  - {fileID: 5126830326648416815}
   - {fileID: 5170068172073885438}
   - {fileID: 7268822256328992079}
+  - {fileID: 8649621993886968129}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -54,7 +55,6 @@ MonoBehaviour:
   expDeviation: 0
   depth: 0
   _earthLayers: []
-  _loot: []
   layerPrefabs: []
   _layerParent: {fileID: 8865702719375164150}
   _shift: 0.3
@@ -66,6 +66,8 @@ MonoBehaviour:
   _layerResistanceDeviation: 0.05
   _jumpStartPosition: {fileID: 5148428999116205366}
   _jumpEndPosition: {fileID: 2910426857602403628}
+  treasures: []
+  _treasureParent: {fileID: 7474036289495634340}
 --- !u!114 &1987463063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,6 +218,69 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &2982476712608531616
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5126830326648416815}
+  m_Layer: 0
+  m_Name: Models
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5126830326648416815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2982476712608531616}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4431097740408640681}
+  m_Father: {fileID: 536752861488536728}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7474036289495634340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8649621993886968129}
+  m_Layer: 0
+  m_Name: TreasuresParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8649621993886968129
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7474036289495634340}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 1.2472395, y: -0.938832, z: -0.6886203}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 536752861488536728}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8865702719375164150
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +468,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 536752861488536728}
+    m_TransformParent: {fileID: 5126830326648416815}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: edbfe40695d42b342b7d46c04702f1b1, type: 3}
       propertyPath: m_RootOrder
@@ -439,7 +504,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: edbfe40695d42b342b7d46c04702f1b1, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: edbfe40695d42b342b7d46c04702f1b1, type: 3}
       propertyPath: m_LocalRotation.y
@@ -447,7 +512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: edbfe40695d42b342b7d46c04702f1b1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: edbfe40695d42b342b7d46c04702f1b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

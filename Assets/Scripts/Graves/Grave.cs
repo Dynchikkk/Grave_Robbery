@@ -15,13 +15,18 @@ public abstract class Grave : BaseMonoBehaviour
     [Range(0, 1)] public float expDeviation;
     public int depth;
     [SerializeField] protected List<GraveLayer> _earthLayers = new();
-    [SerializeField] protected List<Loot> _loot = new();
     public List<GameObject> layerPrefabs = new();
     [SerializeField] protected GameObject _layerParent;
     [Tooltip("Layer shift by Y")]
     [SerializeField] protected float _shift;
     [SerializeField] protected GameObject _floor;
     [SerializeField] protected GameObject _wall;
+
+    [Header("Treasures")]
+    public List<Treasure> treasures = new();
+    [SerializeField] private GameObject _treasureParent;
+    // временно
+    [SerializeField] private List<GameObject> instTreasures = new();
 
     [Header("Layers Attributes")]
     [Header("Hp")]
@@ -50,6 +55,7 @@ public abstract class Grave : BaseMonoBehaviour
     protected void Start()
     {
         SetStartCharaceristic();
+        InstantiateTreasures();
     }
 
     protected void OnDisable()
@@ -73,8 +79,16 @@ public abstract class Grave : BaseMonoBehaviour
         Destroy(earthLayer.gameObject);
         if (_earthLayers.Count > 0)
             return;
+        // Add currency for player
+        // exp
         _main.player.AddExpPoints(exp);
+        // money
         _main.player.SetLocalMoney(money);
+        // treasure
+        //for (int i = 0; i < treasures.Count; i++)
+        //{
+        //    _main.player.AddTreasure(treasures[i]);
+        //}
         print("grave Destroy");
         //Destroy(gameObject);
     }
@@ -127,8 +141,18 @@ public abstract class Grave : BaseMonoBehaviour
         GameObject floor = Instantiate(_floor, _earthLayers[floorNum].transform);
         floor.transform.parent = _earthLayers[floorNum].transform.parent.parent;
         floor.GetComponentInChildren<MeshRenderer>().material = _earthLayers[floorNum].GetComponent<MeshRenderer>().material;
+        _treasureParent.transform.localPosition = floor.transform.localPosition;
         // Временно
         floor.transform.localScale = new Vector3(1, 1, 1);
+    }
+
+    protected void InstantiateTreasures()
+    {
+        for (int i = 0; i < treasures.Count; i++)
+        {
+            GameObject localTreasure = Instantiate(treasures[i].gameObject, _treasureParent.transform);
+            instTreasures.Add(localTreasure);
+        }
     }
 
     public void SetJumpZone()

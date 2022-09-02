@@ -27,4 +27,6 @@ MonoBehaviour:
   - {fileID: 4652730224699970345, guid: 70337fae1fca00e4c9bd6bc1e7531e41, type: 3}
   enemiesOnLevel:
   - enemy: {fileID: 70853661858588444, guid: 7a18b14e40576e24288011753824037c, type: 3}
-    startPosition: {fileID: 0}
+  treasurePerLvlCount: 2
+  treasuresType:
+  - {fileID: 934653353994605289, guid: e87783cc1e20b7b4e9875be96df2db8a, type: 3}

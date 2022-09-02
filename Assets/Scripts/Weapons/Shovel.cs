@@ -6,9 +6,9 @@ public abstract class Shovel : Weapon
 	
 	public float DigCd { get; protected set; }
 	
-	[Header("Interaction attribute")]
-	// Sphere radius
-	[SerializeField] protected float _interactionFault;
+	//[Header("Interaction attribute")]
+	//// Sphere radius
+	//[SerializeField] protected float _interactionFault;
 
 	private void Start()
 	{
@@ -36,7 +36,7 @@ public abstract class Shovel : Weapon
 			if (hit.transform.gameObject.TryGetComponent(out GraveLayer earthLayer))
 			{
                 earthLayer.TakeDamage(shovelAttribute.digDamage);
-			}
+			}	
 		}
 	}
 }

@@ -37,6 +37,10 @@ public class Level : ScriptableObject
 
     [Header("Enemies")]
     public List<EnemyOnLevel> enemiesOnLevel = new();
+
+    [Header("Treasures")]
+    public int treasurePerLvlCount;
+    public List<Treasure> treasuresType = new();
 }
 
 [System.Serializable]

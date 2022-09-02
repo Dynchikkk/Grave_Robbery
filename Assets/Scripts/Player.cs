@@ -9,16 +9,21 @@ public class Player : BaseMonoBehaviour
     private MainLogic _main;
 
     public Action<Weapon> OnUseItemAction;
+    public event Action OnClickMouseButton;
     public event Action OnJumpInteract;
+
+    [SerializeField] private float _useCd;
+    private float _dopUseCd;
+
+
+    [field: SerializeField] public float InteractionDistance { get; private set; }
+    // Sphere radius
+    [SerializeField] private float interactionFault;
 
     [Header("Weapons")]
     [SerializeField] private List<Weapon> _weapons;
     [SerializeField] private Weapon _selectedWeapon;
 
-    [Header("Interaction attribute")]
-    [SerializeField] private int interactionDistance;
-    // Sphere radius
-    [SerializeField] private float interactionFault;
 
     [Header("Currency")]
     [Header("Experience Points")]
@@ -27,6 +32,8 @@ public class Player : BaseMonoBehaviour
     [SerializeField] private int _expPoints = 0;
     [Header("Money")]
     [SerializeField] private int _playerMoney;
+    [field: Header("Tresures")]
+    [field: SerializeField] public List<Treasure> PlayerTreasures { get; private set; }
 
     public int ExpPoints
     {
@@ -44,29 +51,35 @@ public class Player : BaseMonoBehaviour
     [Header("Another")]
     public int playerLevel = 1;
     public Camera cam;
-    
+
     private void OnEnable()
     {
         instance = this;
         _main = MainLogic.main;
 
-        SelectDefaultWeapon();  
+        SelectDefaultWeapon();
+        _dopUseCd = _useCd;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
             OnJumpInteract?.Invoke();
-        
+
         if (Input.GetMouseButtonDown(0))
+        {
             UseWeapon();
-        
+            Use();
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
             SelectWeapon(0);
         if (Input.GetKeyDown(KeyCode.Alpha2))
             SelectWeapon(1);
         if (Input.GetKeyDown(KeyCode.Alpha3))
             SelectWeapon(2);
+
+        _dopUseCd -= Time.deltaTime;
     }
 
     public void UpLevel()
@@ -81,6 +94,11 @@ public class Player : BaseMonoBehaviour
     {
         print("You earn " + exp.ToString() + "exp");
         ExpPoints += exp;
+    }
+
+    public void Use()
+    {
+        OnClickMouseButton?.Invoke();
     }
 
     private void UseWeapon()
@@ -114,5 +132,32 @@ public class Player : BaseMonoBehaviour
     {
         _main.money += _playerMoney;
         _playerMoney = 0;
+    }
+
+    public void AddTreasure(Treasure treasure)
+    {
+        PlayerTreasures.Add(treasure);
+    }
+
+    public GameObject CheckIfPlayerSee()
+    {
+        if (_dopUseCd > 0)
+            return null;
+
+        _dopUseCd = _useCd;
+
+        var cameraTransform = Camera.main.transform;
+        Vector3 playerPos = cameraTransform.position;
+        Vector3 playerLook = cameraTransform.forward;
+
+        if (Physics.Raycast(playerPos, playerLook, out RaycastHit hit, Player.instance.InteractionDistance))
+        {
+            if (hit.transform.gameObject)
+            {
+                return hit.transform.gameObject;
+            }
+        }
+
+        return null;
     }
 }

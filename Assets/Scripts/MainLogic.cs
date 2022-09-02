@@ -77,6 +77,7 @@ public class MainLogic : BaseMonoBehaviour
 
         SetGravesOnLevel(levelNum);
         SetEnemiesOnLevel(levelNum);
+        SetTreasuresToGraves(levelNum);
         OnLevelSet?.Invoke();
     }
 
@@ -137,6 +138,7 @@ public class MainLogic : BaseMonoBehaviour
         }
     }
 
+    // Add empty graves on the scene
     private void InstantiateEmptyGraves(List<Grave> emptyGrave, Level curLevel)
     {
         for (int i = 0; i < emptyGrave.Count; i++)
@@ -155,12 +157,23 @@ public class MainLogic : BaseMonoBehaviour
 
     public void SetTimeText()
     {
-        var time = System.TimeSpan.FromSeconds(LocalTime);
+        var time = TimeSpan.FromSeconds(LocalTime);
         string timeStr = string.Concat(time.Minutes, ".", time.Seconds, ".", time.Milliseconds);
 
         if (time.Milliseconds < 0)
             timeStr = "0.0.0";
 
         timeText.text = timeStr;
+    }
+
+    public void SetTreasuresToGraves(int levelNum)
+    {
+        Level curLevel = _allLevels[levelNum];
+        for (int i = 0; i < curLevel.treasurePerLvlCount; i++)
+        {
+            var rndTreasure = UnityEngine.Random.Range(0, curLevel.treasuresType.Count);
+            var rndGrave = UnityEngine.Random.Range(0, _fullGraves.Count);
+            _fullGraves[rndGrave].treasures.Add(curLevel.treasuresType[rndTreasure]);
+        }
     }
 }
