@@ -21,7 +21,7 @@ public class Player : BaseMonoBehaviour
     [SerializeField] private float interactionFault;
 
     [Header("Weapons")]
-    [SerializeField] private List<Weapon> _weapons;
+    public List<Weapon> weapons = new List<Weapon>(4);
     [SerializeField] private Weapon _selectedWeapon;
 
 
@@ -32,8 +32,8 @@ public class Player : BaseMonoBehaviour
     [SerializeField] private int _expPoints = 0;
     [Header("Money")]
     [SerializeField] private int _playerMoney;
-    [field: Header("Tresures")]
-    [field: SerializeField] public List<Treasure> PlayerTreasures { get; private set; }
+    [Header("Tresures")]
+    public List<Treasure> playerTreasures = new List<Treasure>(5);
 
     public int ExpPoints
     {
@@ -78,6 +78,8 @@ public class Player : BaseMonoBehaviour
             SelectWeapon(1);
         if (Input.GetKeyDown(KeyCode.Alpha3))
             SelectWeapon(2);
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            SelectWeapon(3);
 
         _dopUseCd -= Time.deltaTime;
     }
@@ -109,16 +111,16 @@ public class Player : BaseMonoBehaviour
 
     private void SelectWeapon(int index)
     {
-        if (_weapons.Count <= index || _weapons[index] is null)
+        if (weapons.Count <= index || weapons[index] is null)
             return;
         _selectedWeapon.gameObject.SetActive(false);
-        _selectedWeapon = _weapons[index];
+        _selectedWeapon = weapons[index];
         _selectedWeapon.gameObject.SetActive(true);
     }
 
     private void SelectDefaultWeapon()
     {
-        foreach (var weapon in _weapons)
+        foreach (var weapon in weapons)
             weapon?.gameObject.SetActive(false);
         SelectWeapon(0);
     }
@@ -136,7 +138,20 @@ public class Player : BaseMonoBehaviour
 
     public void AddTreasure(Treasure treasure)
     {
-        PlayerTreasures.Add(treasure);
+        if (playerTreasures[-1] != null)
+        {
+            print("Not enough place");
+            return;
+        }
+
+        for (int i = 0; i < playerTreasures.Count; i++)
+        {
+            if (playerTreasures[i] == null)
+            {
+                playerTreasures[i] = treasure;
+                break;
+            }
+        }
     }
 
     public GameObject CheckIfPlayerSee()

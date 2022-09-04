@@ -60,14 +60,15 @@ MonoBehaviour:
   _shift: 0.3
   _floor: {fileID: 3307818156761967145, guid: 90bd2c1967e996940a406acf59441973, type: 3}
   _wall: {fileID: 6380249997736347675, guid: 0082cd4e0a5614046b560120a7bff000, type: 3}
+  treasures: []
+  _treasureParent: {fileID: 7474036289495634340}
+  instTreasures: []
   middleLayerHp: 100
   _layerHpDeviation: 0.1
   middleLayerResistance: 0
   _layerResistanceDeviation: 0.05
   _jumpStartPosition: {fileID: 5148428999116205366}
   _jumpEndPosition: {fileID: 2910426857602403628}
-  treasures: []
-  _treasureParent: {fileID: 7474036289495634340}
 --- !u!114 &1987463063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,7 +275,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7474036289495634340}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 1.2472395, y: -0.938832, z: -0.6886203}
+  m_LocalPosition: {x: 0.949, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -141,7 +141,8 @@ public abstract class Grave : BaseMonoBehaviour
         GameObject floor = Instantiate(_floor, _earthLayers[floorNum].transform);
         floor.transform.parent = _earthLayers[floorNum].transform.parent.parent;
         floor.GetComponentInChildren<MeshRenderer>().material = _earthLayers[floorNum].GetComponent<MeshRenderer>().material;
-        _treasureParent.transform.localPosition = floor.transform.localPosition;
+        _treasureParent.transform.localPosition = new Vector3(_treasureParent.transform.localPosition.x,
+            floor.transform.localPosition.y, _treasureParent.transform.localPosition.z);
         // Временно
         floor.transform.localScale = new Vector3(1, 1, 1);
     }

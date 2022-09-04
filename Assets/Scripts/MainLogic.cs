@@ -48,6 +48,9 @@ public class MainLogic : BaseMonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text timeText;
 
+    [Header("Dealers")]
+    public Dealer currentDealer;
+
     private void Awake()
     {
         main = this;
