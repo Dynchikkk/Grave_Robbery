@@ -10,6 +10,8 @@ public class Dealer : MonoBehaviour
     [SerializeField] private float sellCoef;
     [SerializeField] private float sellCoefTreasure;
 
+    public List<Item> salesSheet = new List<Item>();
+
     private void Awake()
     {
         _main = MainLogic.main;

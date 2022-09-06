@@ -16,7 +16,6 @@ public class FirstPersonMovement : MonoBehaviour
     public List<System.Func<float>> speedOverrides = new List<System.Func<float>>();
 
 
-
     void Awake()
     {
         // Get the rigidbody on this.

@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trasureName: GoldenScull
+  icon: {fileID: 21300000, guid: 39917ec976b3e8641b06fc772aa235aa, type: 3}
   cost: 100
 --- !u!64 &7598583016212326643
 MeshCollider:

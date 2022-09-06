@@ -4,6 +4,7 @@ using UnityEngine;
 public class Treasure : BaseMonoBehaviour
 {
     public string trasureName;
+    public Sprite icon;
     public int cost;
     private Player _player;
 
