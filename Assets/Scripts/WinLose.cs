@@ -19,7 +19,7 @@ public class WinLose : MonoBehaviour
     public void Lose()
     {
         print("lose");
-        _main.player.GetComponent<FirstPersonMovement>().enabled = false;
+        _main.player.StopPlayer(false);
         _main.inLocation = false;
     }
 }

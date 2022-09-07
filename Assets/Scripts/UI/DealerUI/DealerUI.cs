@@ -38,6 +38,9 @@ public class DealerUI : MonoBehaviour
     {
         for (int i = 0; i < _main.player.weapons.Count; i++)
         {
+            if (_main.player.weapons[i] == null)
+                continue;
+            
             GameObject sellElement = Instantiate(sellPrefab, sellParent.transform);
             DealerElement sellElementScript = sellElement.GetComponent<DealerElement>();
             sellElementScript.numInPlayerList = i;
@@ -49,6 +52,9 @@ public class DealerUI : MonoBehaviour
     {
         for (int i = 0; i < _main.player.playerTreasures.Count; i++)
         {
+            if (_main.player.playerTreasures[i] == null)
+                continue;
+
             GameObject sellTreasureElement = Instantiate(sellTreasurePrefab, sellTreasureParent.transform);
             DealerElement sellTreasureElementScript = sellTreasureElement.GetComponent<DealerElement>();
             sellTreasureElementScript.numInPlayerList = i;

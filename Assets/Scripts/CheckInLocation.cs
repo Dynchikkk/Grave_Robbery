@@ -4,7 +4,6 @@ using Project.Architecture;
 public class CheckInLocation : BaseMonoBehaviour
 {
     private MainLogic _main;
-    private bool _firstTime = true;
 
     private void Awake()
     {
@@ -16,10 +15,9 @@ public class CheckInLocation : BaseMonoBehaviour
         if (other.tag != "Player")
             return;
 
-        if (_firstTime)
+        if (_main.inLocation is false)
         {
             _main.inLocation = true;
-            _firstTime = false;
         }
         else
             CheckWherePlayer();   
@@ -29,6 +27,7 @@ public class CheckInLocation : BaseMonoBehaviour
     {
         if (_main.inLocation is true)
         {
+            _main.inLocation = false;
             _main.winLoose.Win();
         }
     }

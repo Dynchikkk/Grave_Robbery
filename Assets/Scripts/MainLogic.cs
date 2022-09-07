@@ -7,10 +7,12 @@ using TMPro;
 
 [RequireComponent(typeof(WinLose))]
 [RequireComponent(typeof(Money))]
+[RequireComponent(typeof(SceneAndCanvasManager))]
 public class MainLogic : BaseMonoBehaviour
 {
     public static MainLogic main;
     public WinLose winLoose;
+    public SceneAndCanvasManager sceneAndCanvasManager;
     public int money;
 
     //events
@@ -19,6 +21,7 @@ public class MainLogic : BaseMonoBehaviour
     [Header("Base")]
     public Player player;
     public bool inLocation;
+    public bool noPause;
 
     [SerializeField] private float _localTime;
     private float LocalTime
@@ -47,6 +50,8 @@ public class MainLogic : BaseMonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TMP_Text timeText;
+    [SerializeField] private Canvas _mainCanvas;
+    [SerializeField] private Canvas _dealerCanvas;
 
     [Header("Dealers")]
     public Dealer currentDealer;
@@ -56,11 +61,13 @@ public class MainLogic : BaseMonoBehaviour
         main = this;
         winLoose = GetComponent<WinLose>();
         money = GetComponent<Money>().AllMoney;
+        sceneAndCanvasManager = GetComponent<SceneAndCanvasManager>();
     }
 
     private void Start()
     {
         SetLevelÑharacteristic(0);
+        NoPause(noPause);
     }
 
     private void Update()
@@ -71,6 +78,20 @@ public class MainLogic : BaseMonoBehaviour
         {
             LocalTime -= Time.deltaTime;
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            EscapePress();
+    }
+
+    public void EscapePress()
+    {
+        if (noPause is false)
+            return;
+
+        NoPause(false);
+
+        //Âðåìåííî
+        sceneAndCanvasManager.FlipCanvas(_mainCanvas, _dealerCanvas);
     }
 
     private void SetLevelÑharacteristic(int levelNum)
@@ -167,6 +188,23 @@ public class MainLogic : BaseMonoBehaviour
             timeStr = "0.0.0";
 
         timeText.text = timeStr;
+    }
+
+    public void NoPause(bool condition)
+    {
+        player.StopPlayer(condition);
+        noPause = condition;
+        Cursor.visible = condition;
+        if (condition is false)
+        {
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.Confined;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
     public void SetTreasuresToGraves(int levelNum)

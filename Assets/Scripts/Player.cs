@@ -175,4 +175,12 @@ public class Player : BaseMonoBehaviour
 
         return null;
     }
+
+    public void StopPlayer(bool condition)
+    {
+        GetComponent<FirstPersonMovement>().enabled = condition;
+        GetComponent<Jump>().enabled = condition;
+        GetComponent<Crouch>().enabled = condition;
+        GetComponentInChildren<FirstPersonLook>().enabled = condition;
+    }
 }
