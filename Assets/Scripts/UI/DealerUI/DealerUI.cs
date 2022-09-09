@@ -68,7 +68,7 @@ public class DealerUI : MonoBehaviour
         {
             GameObject buyElement = Instantiate(buyPrefab, buyParent.transform);
             DealerElement buyElementScript = buyElement.GetComponent<DealerElement>();
-            buyElementScript.numInPlayerList = i;
+            buyElementScript.objectToBuy = _main.currentDealer.salesSheet[i];
             buyElementScript.SetIcon(_main.currentDealer.salesSheet[i].icon);
         }
     }

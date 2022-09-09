@@ -27,16 +27,20 @@ public class DealerElement : MonoBehaviour
 
     public void Buy()
     {
-        _main.currentDealer.Buy(objectToBuy);
+        bool needToDestoy = _main.currentDealer.Buy(objectToBuy);
+        if (needToDestoy)
+            Destroy(gameObject);
     }
 
     public void SellItem()
     {
         _main.currentDealer.SellItem(numInPlayerList);
+        Destroy(gameObject);
     }
 
     public void SellTreasure()
     {
         _main.currentDealer.SellTreasure(numInPlayerList);
+        Destroy(gameObject);
     }
 }

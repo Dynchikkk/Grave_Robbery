@@ -15,12 +15,12 @@ public class Treasure : BaseMonoBehaviour
 
     private void OnEnable()
     {
-        _player.OnClickMouseButton += DugOut;
+        _player.OnKeyEInteract += DugOut;
     }
 
     private void OnDisable()
     {
-        _player.OnClickMouseButton -= DugOut;
+        _player.OnKeyEInteract -= DugOut;
     }
 
     public void DugOut()
@@ -31,7 +31,7 @@ public class Treasure : BaseMonoBehaviour
 
         if (curObj.TryGetComponent(out Treasure localTreasure))
         {
-            _player.OnClickMouseButton -= DugOut;
+            _player.OnKeyEInteract -= DugOut;
             _player.AddTreasure(this);
             GetComponent<MeshRenderer>().enabled = false;
             

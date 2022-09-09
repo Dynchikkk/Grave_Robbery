@@ -266,6 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4452b3c565223048bfb87b069c80ee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Cost>k__BackingField: 10
   icon: {fileID: 21300000, guid: 15c921f0053dc7d449e02d3944852213, type: 3}
   _player: {fileID: 0}
   shovelAttribute:

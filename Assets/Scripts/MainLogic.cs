@@ -50,8 +50,7 @@ public class MainLogic : BaseMonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TMP_Text timeText;
-    [SerializeField] private Canvas _mainCanvas;
-    [SerializeField] private Canvas _dealerCanvas;
+    public Canvas mainCanvas;
 
     [Header("Dealers")]
     public Dealer currentDealer;
@@ -85,13 +84,10 @@ public class MainLogic : BaseMonoBehaviour
 
     public void EscapePress()
     {
-        if (noPause is false)
-            return;
+        //if (noPause is false)
+        //    return;
 
-        NoPause(false);
-
-        //Âðåìåííî
-        sceneAndCanvasManager.FlipCanvas(_mainCanvas, _dealerCanvas);
+        //NoPause(false);
     }
 
     private void SetLevelÑharacteristic(int levelNum)
@@ -194,16 +190,18 @@ public class MainLogic : BaseMonoBehaviour
     {
         player.StopPlayer(condition);
         noPause = condition;
-        Cursor.visible = condition;
+        Cursor.visible = !condition;
         if (condition is false)
         {
             Time.timeScale = 0;
             Cursor.lockState = CursorLockMode.Confined;
+            player.RemoveSelectedWeapon();
         }
         else
         {
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.Locked;
+            player.SelectDefaultWeapon();
         }
     }
 

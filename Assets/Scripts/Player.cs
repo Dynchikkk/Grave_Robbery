@@ -9,7 +9,8 @@ public class Player : BaseMonoBehaviour
     private MainLogic _main;
 
     public Action<Weapon> OnUseItemAction;
-    public event Action OnClickMouseButton;
+    //public event Action OnClickMouseButton;
+    public event Action OnKeyEInteract;
     public event Action OnJumpInteract;
 
     [SerializeField] private float _useCd;
@@ -66,11 +67,12 @@ public class Player : BaseMonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             OnJumpInteract?.Invoke();
 
+        if (Input.GetKeyDown(KeyCode.E))
+            OnKeyEInteract?.Invoke();
+
         if (Input.GetMouseButtonDown(0))
-        {
             UseWeapon();
-            Use();
-        }
+            
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
             SelectWeapon(0);
@@ -98,11 +100,6 @@ public class Player : BaseMonoBehaviour
         ExpPoints += exp;
     }
 
-    public void Use()
-    {
-        OnClickMouseButton?.Invoke();
-    }
-
     private void UseWeapon()
     {
         print("use weapon");
@@ -113,12 +110,13 @@ public class Player : BaseMonoBehaviour
     {
         if (weapons.Count <= index || weapons[index] is null)
             return;
-        _selectedWeapon.gameObject.SetActive(false);
+        if (_selectedWeapon != null)
+            _selectedWeapon.gameObject.SetActive(false);     
         _selectedWeapon = weapons[index];
         _selectedWeapon.gameObject.SetActive(true);
     }
 
-    private void SelectDefaultWeapon()
+    public void SelectDefaultWeapon()
     {
         foreach (var weapon in weapons)
             weapon?.gameObject.SetActive(false);
@@ -182,5 +180,14 @@ public class Player : BaseMonoBehaviour
         GetComponent<Jump>().enabled = condition;
         GetComponent<Crouch>().enabled = condition;
         GetComponentInChildren<FirstPersonLook>().enabled = condition;
+    }
+
+    public void RemoveSelectedWeapon()
+    {
+        if (_selectedWeapon == null)
+            return;
+
+        _selectedWeapon.gameObject.SetActive(false);
+        _selectedWeapon = null;
     }
 }
