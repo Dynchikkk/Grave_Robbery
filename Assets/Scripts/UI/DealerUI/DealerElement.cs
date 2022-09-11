@@ -9,7 +9,7 @@ public class DealerElement : MonoBehaviour
 
     [Header("Base")]
     public int numInPlayerList;
-    public Item objectToBuy;
+    public int numInDealerList;
 
     [Header("UI")]
     [SerializeField] private Button actionButton;
@@ -26,8 +26,9 @@ public class DealerElement : MonoBehaviour
     }
 
     public void Buy()
-    {
-        bool needToDestoy = _main.currentDealer.Buy(objectToBuy);
+    {  
+        bool needToDestoy = _main.currentDealer.Buy(numInDealerList);
+
         if (needToDestoy)
             Destroy(gameObject);
     }

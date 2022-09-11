@@ -16,7 +16,6 @@ public class Player : BaseMonoBehaviour
     [SerializeField] private float _useCd;
     private float _dopUseCd;
 
-
     [field: SerializeField] public float InteractionDistance { get; private set; }
     // Sphere radius
     [SerializeField] private float interactionFault;
@@ -24,6 +23,7 @@ public class Player : BaseMonoBehaviour
     [Header("Weapons")]
     public List<Weapon> weapons = new List<Weapon>(4);
     [SerializeField] private Weapon _selectedWeapon;
+    [SerializeField] private GameObject _inventoryParent;
 
 
     [Header("Currency")]
@@ -58,8 +58,13 @@ public class Player : BaseMonoBehaviour
         instance = this;
         _main = MainLogic.main;
 
-        SelectDefaultWeapon();
         _dopUseCd = _useCd;
+
+        for (int i = 0; i < weapons.Count; i++)
+        {
+            InstantiateItem(i);
+        }
+        SelectDefaultWeapon();
     }
 
     private void Update()
@@ -72,7 +77,6 @@ public class Player : BaseMonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
             UseWeapon();
-            
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
             SelectWeapon(0);
@@ -80,7 +84,7 @@ public class Player : BaseMonoBehaviour
             SelectWeapon(1);
         if (Input.GetKeyDown(KeyCode.Alpha3))
             SelectWeapon(2);
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha4))
             SelectWeapon(3);
 
         _dopUseCd -= Time.deltaTime;
@@ -111,7 +115,7 @@ public class Player : BaseMonoBehaviour
         if (weapons.Count <= index || weapons[index] is null)
             return;
         if (_selectedWeapon != null)
-            _selectedWeapon.gameObject.SetActive(false);     
+            _selectedWeapon.gameObject.SetActive(false);
         _selectedWeapon = weapons[index];
         _selectedWeapon.gameObject.SetActive(true);
     }
@@ -189,5 +193,38 @@ public class Player : BaseMonoBehaviour
 
         _selectedWeapon.gameObject.SetActive(false);
         _selectedWeapon = null;
+    }
+
+    public bool SetItem(Item item)
+    {
+        if (weapons[weapons.Count - 1] != null)
+        {
+            print("Not enough place");
+            return false;
+        }
+
+        for (int i = 0; i < weapons.Count; i++)
+        {
+            if (weapons[i] == null)
+            {
+                weapons[i] = (Weapon)item;
+                _main.money -= item.Cost;
+                InstantiateItem(i);
+                break;
+            }
+        }
+
+        return true;
+    }
+
+    public void InstantiateItem(int numInWeaponList)
+    {
+        if (weapons[numInWeaponList] == null)
+            return;
+
+        GameObject localItem = Instantiate(weapons[numInWeaponList].gameObject, _inventoryParent.transform);
+        localItem.SetActive(false);
+
+        weapons[numInWeaponList] = localItem.GetComponent<Weapon>();
     }
 }

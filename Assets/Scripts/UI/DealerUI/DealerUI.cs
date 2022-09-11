@@ -27,6 +27,20 @@ public class DealerUI : MonoBehaviour
         InstantiateAllElements();
     }
 
+    private void OnEnable()
+    {
+        _main.currentDealer.OnSellEvent += InstantiateBuyElement;
+        _main.currentDealer.OnBuyEvent += InstantiateSellElement;
+        _main.currentDealer.OnInteract += InstantiateAllElements;
+    }
+
+    private void OnDisable()
+    {
+        _main.currentDealer.OnSellEvent -= InstantiateBuyElement;
+        _main.currentDealer.OnBuyEvent -= InstantiateSellElement;
+        _main.currentDealer.OnInteract -= InstantiateAllElements;
+    }
+
     public void InstantiateAllElements()
     {
         InstantiateSellElements();
@@ -34,22 +48,20 @@ public class DealerUI : MonoBehaviour
         InstantiateBuyElements();
     }
 
-    public void InstantiateSellElements()
+    private void InstantiateSellElements()
     {
+        DestroyAllChilds(sellParent);
+
         for (int i = 0; i < _main.player.weapons.Count; i++)
         {
-            if (_main.player.weapons[i] == null)
-                continue;
-            
-            GameObject sellElement = Instantiate(sellPrefab, sellParent.transform);
-            DealerElement sellElementScript = sellElement.GetComponent<DealerElement>();
-            sellElementScript.numInPlayerList = i;
-            sellElementScript.SetIcon(_main.player.weapons[i].icon);
+            InstantiateSellElement(i);
         }
     }
 
-    public void InstantiateSellTreasureElements()
+    private void InstantiateSellTreasureElements()
     {
+        DestroyAllChilds(sellTreasureParent);
+
         for (int i = 0; i < _main.player.playerTreasures.Count; i++)
         {
             if (_main.player.playerTreasures[i] == null)
@@ -62,14 +74,43 @@ public class DealerUI : MonoBehaviour
         }
     }
 
-    public void InstantiateBuyElements()
+    private void InstantiateBuyElements()
     {
+        DestroyAllChilds(buyParent);
+
         for (int i = 0; i < _main.currentDealer.salesSheet.Count; i++)
         {
-            GameObject buyElement = Instantiate(buyPrefab, buyParent.transform);
-            DealerElement buyElementScript = buyElement.GetComponent<DealerElement>();
-            buyElementScript.objectToBuy = _main.currentDealer.salesSheet[i];
-            buyElementScript.SetIcon(_main.currentDealer.salesSheet[i].icon);
+            InstantiateBuyElement(i);
+        }
+    }
+
+    public void InstantiateBuyElement(int numInDealerList)
+    {
+        if (_main.currentDealer.salesSheet[numInDealerList] == null)
+            return;
+
+        GameObject buyElement = Instantiate(buyPrefab, buyParent.transform);
+        DealerElement buyElementScript = buyElement.GetComponent<DealerElement>();
+        buyElementScript.numInDealerList = numInDealerList;
+        buyElementScript.SetIcon(_main.currentDealer.salesSheet[numInDealerList].icon);
+    }
+
+    public void InstantiateSellElement(int numInPlayerList)
+    {
+        if (_main.player.weapons[numInPlayerList] == null)
+            return;
+
+        GameObject sellElement = Instantiate(sellPrefab, sellParent.transform);
+        DealerElement sellElementScript = sellElement.GetComponent<DealerElement>();
+        sellElementScript.numInPlayerList = numInPlayerList;
+        sellElementScript.SetIcon(_main.player.weapons[numInPlayerList].icon);
+    }
+
+    private void DestroyAllChilds(GameObject parent)
+    {
+        for (int i = 0; i < parent.transform.childCount; i++)
+        {
+            Destroy(parent.transform.GetChild(i).gameObject);
         }
     }
 }

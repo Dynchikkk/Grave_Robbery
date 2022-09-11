@@ -1,16 +1,20 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Dealer : MonoBehaviour
 {
     private MainLogic _main;
     private Player _player;
 
+    public Action<int> OnBuyEvent;
+    public Action<int> OnSellEvent;
+    public event Action OnInteract;
+
     [SerializeField] private float sellCoef;
     [SerializeField] private float sellCoefTreasure;
     [SerializeField] private Canvas _dealerCanvas;
-
 
     public List<Item> salesSheet = new List<Item>();
 
@@ -30,30 +34,30 @@ public class Dealer : MonoBehaviour
         _player.OnKeyEInteract -= Interact;
     }
 
-    public bool Buy(Item item)
+    public bool Buy(int num)
     {
-        if (item.Cost > _main.money)
+        if (salesSheet[num].Cost > _main.money)
         {
             print("Not enough money");
             return false;
         }
 
-        if (_player.weapons[_player.weapons.Count - 1] != null)
+        // Получаем номер свободного места в инвентаре игрока
+        int lastFreeWeaponPlace = 0;
+        for (int i = 0; i < _main.player.weapons.Count; i++)
         {
-            print("Not enough place");
-            return false;
-        }
-
-        for (int i = 0; i < _player.weapons.Count; i++)
-        {
-            if (_player.weapons[i] == null)
+            if (_main.player.weapons[i] == null)
             {
-                _player.weapons[i] = (Weapon)item;
-                _main.money -= item.Cost;
+                lastFreeWeaponPlace = i;
                 break;
             }
         }
-        return true;
+
+        bool buy = _player.SetItem(salesSheet[num]);
+        salesSheet[num] = null;
+        OnBuyEvent?.Invoke(lastFreeWeaponPlace);
+
+        return buy;
     }
 
     public void SellItem(int num)
@@ -64,8 +68,15 @@ public class Dealer : MonoBehaviour
         if (_player.weapons[num] == null)
             return;
 
-        _main.money += System.Convert.ToInt32(_player.weapons[num].Cost / sellCoef);
-        _player.weapons[num] = null;   
+        Weapon copy = Instantiate(_player.weapons[num]);
+        salesSheet.Add(copy);
+
+        OnSellEvent?.Invoke(salesSheet.Count - 1);
+
+        _main.money += Convert.ToInt32(_player.weapons[num].Cost / sellCoef);
+
+        Destroy(_player.weapons[num].gameObject);
+        _player.weapons[num] = null;
     }
 
     public void SellTreasure(int num)
@@ -76,7 +87,7 @@ public class Dealer : MonoBehaviour
         if (_player.playerTreasures[num] == null)
             return;
 
-        _main.money += System.Convert.ToInt32(_player.playerTreasures[num].cost * sellCoefTreasure);
+        _main.money += Convert.ToInt32(_player.playerTreasures[num].cost * sellCoefTreasure);
         _player.playerTreasures[num] = null;
     }
 
@@ -90,6 +101,7 @@ public class Dealer : MonoBehaviour
         {
             _main.sceneAndCanvasManager.FlipCanvas(_main.mainCanvas, _dealerCanvas);
             _main.NoPause(false);
+            OnInteract?.Invoke();
         }
     }
 }
