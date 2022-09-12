@@ -85,10 +85,10 @@ public abstract class Grave : BaseMonoBehaviour
         // money
         _main.player.SetLocalMoney(money);
         // treasure
-        //for (int i = 0; i < treasures.Count; i++)
-        //{
-        //    _main.player.AddTreasure(treasures[i]);
-        //}
+        for (int i = 0; i < treasures.Count; i++)
+        {
+            treasures[i].gameObject.SetActive(true);
+        }
         print("grave Destroy");
         //Destroy(gameObject);
     }
@@ -151,8 +151,11 @@ public abstract class Grave : BaseMonoBehaviour
     {
         for (int i = 0; i < treasures.Count; i++)
         {
-            GameObject localTreasure = Instantiate(treasures[i].gameObject, _treasureParent.transform);
-            instTreasures.Add(localTreasure);
+            Treasure localTreasure = Instantiate(treasures[i], _treasureParent.transform);
+            localTreasure.gameObject.SetActive(false);
+            treasures[i] = localTreasure;
+
+            //instTreasures.Add(localTreasure);
         }
     }
 

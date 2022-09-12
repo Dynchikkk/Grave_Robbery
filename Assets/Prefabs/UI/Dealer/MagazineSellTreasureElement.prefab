@@ -124,7 +124,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3572287020132228214}
         m_TargetAssemblyTypeName: DealerElement, Assembly-CSharp
-        m_MethodName: SellItem
+        m_MethodName: SellTreasure
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numInPlayerList: 0
-  objectToBuy: {fileID: 0}
+  numInDealerList: 0
   actionButton: {fileID: 3572287019881189611}
   itemIcon: {fileID: 3572287020769901462}
 --- !u!1 &3572287020520989373
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Buy
+  m_text: Sell
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

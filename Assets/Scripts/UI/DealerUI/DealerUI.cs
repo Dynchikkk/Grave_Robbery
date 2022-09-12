@@ -113,4 +113,10 @@ public class DealerUI : MonoBehaviour
             Destroy(parent.transform.GetChild(i).gameObject);
         }
     }
+
+    public void ChangeMagazine(bool toItemMagazine)
+    {
+        sellParent.SetActive(toItemMagazine);
+        sellTreasureParent.SetActive(!toItemMagazine);
+    }
 }

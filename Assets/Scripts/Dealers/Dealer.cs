@@ -1,4 +1,3 @@
-using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -14,7 +13,7 @@ public class Dealer : MonoBehaviour
 
     [SerializeField] private float sellCoef;
     [SerializeField] private float sellCoefTreasure;
-    [SerializeField] private Canvas _dealerCanvas;
+    public Canvas dealerCanvas;
 
     public List<Item> salesSheet = new List<Item>();
 
@@ -32,6 +31,15 @@ public class Dealer : MonoBehaviour
     private void OnDisable()
     {
         _player.OnKeyEInteract -= Interact;
+    }
+
+    private void Start()
+    {
+        for (int i = 0; i < salesSheet.Count; i++)
+        {
+            Item link = Instantiate(salesSheet[i], transform);
+            salesSheet[i] = link;
+        }
     }
 
     public bool Buy(int num)
@@ -54,8 +62,15 @@ public class Dealer : MonoBehaviour
         }
 
         bool buy = _player.SetItem(salesSheet[num]);
-        salesSheet[num] = null;
+        if (buy is false)
+            return buy;
+
         OnBuyEvent?.Invoke(lastFreeWeaponPlace);
+
+        if (salesSheet[num].gameObject != null)
+        {
+            Destroy(salesSheet[num].gameObject);
+        }
 
         return buy;
     }
@@ -68,7 +83,7 @@ public class Dealer : MonoBehaviour
         if (_player.weapons[num] == null)
             return;
 
-        Weapon copy = Instantiate(_player.weapons[num]);
+        Weapon copy = Instantiate(_player.weapons[num], transform);
         salesSheet.Add(copy);
 
         OnSellEvent?.Invoke(salesSheet.Count - 1);
@@ -99,7 +114,7 @@ public class Dealer : MonoBehaviour
 
         if (curObj.TryGetComponent(out Dealer localDealer))
         {
-            _main.sceneAndCanvasManager.FlipCanvas(_main.mainCanvas, _dealerCanvas);
+            _main.sceneAndCanvasManager.FlipCanvas(_main.mainCanvas, dealerCanvas);
             _main.NoPause(false);
             OnInteract?.Invoke();
         }

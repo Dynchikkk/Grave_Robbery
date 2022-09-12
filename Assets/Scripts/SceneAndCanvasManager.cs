@@ -5,7 +5,7 @@ public class SceneAndCanvasManager : MonoBehaviour
 {
     public void FlipCanvas(Canvas canvasToClose, Canvas canvasToOpen)
     {
-        canvasToClose.enabled = false;
-        canvasToOpen.enabled = true;
+        canvasToClose.gameObject.SetActive(false);
+        canvasToOpen.gameObject.SetActive(true);
     }
 }

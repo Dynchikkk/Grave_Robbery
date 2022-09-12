@@ -140,7 +140,7 @@ public class Player : BaseMonoBehaviour
 
     public void AddTreasure(Treasure treasure)
     {
-        if (playerTreasures[-1] != null)
+        if (playerTreasures.Contains(null) is false)
         {
             print("Not enough place");
             return;
@@ -158,19 +158,20 @@ public class Player : BaseMonoBehaviour
 
     public GameObject CheckIfPlayerSee()
     {
-        if (_dopUseCd > 0)
-            return null;
+        //if (_dopUseCd > 0)
+        //    return null;
 
-        _dopUseCd = _useCd;
+        //_dopUseCd = _useCd;
 
         var cameraTransform = Camera.main.transform;
         Vector3 playerPos = cameraTransform.position;
         Vector3 playerLook = cameraTransform.forward;
 
-        if (Physics.Raycast(playerPos, playerLook, out RaycastHit hit, Player.instance.InteractionDistance))
+        if (Physics.Raycast(playerPos, playerLook, out RaycastHit hit, InteractionDistance))
         {
             if (hit.transform.gameObject)
             {
+                print(hit.transform.gameObject.name);
                 return hit.transform.gameObject;
             }
         }
@@ -197,7 +198,7 @@ public class Player : BaseMonoBehaviour
 
     public bool SetItem(Item item)
     {
-        if (weapons[weapons.Count - 1] != null)
+        if (weapons.Contains(null) == false)
         {
             print("Not enough place");
             return false;

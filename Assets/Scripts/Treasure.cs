@@ -31,10 +31,12 @@ public class Treasure : BaseMonoBehaviour
 
         if (curObj.TryGetComponent(out Treasure localTreasure))
         {
+            if (_player.playerTreasures.Contains(null) is false)
+                return;
+
             _player.OnKeyEInteract -= DugOut;
             _player.AddTreasure(this);
-            GetComponent<MeshRenderer>().enabled = false;
-            
+            GetComponent<MeshRenderer>().enabled = false; 
         }
     }
 }
