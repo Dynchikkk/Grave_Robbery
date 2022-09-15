@@ -14,7 +14,7 @@ public class Player : BaseMonoBehaviour
     public event Action OnJumpInteract;
 
     [SerializeField] private float _useCd;
-    private float _dopUseCd;
+    //private float _dopUseCd;
 
     [field: SerializeField] public float InteractionDistance { get; private set; }
     // Sphere radius
@@ -53,12 +53,16 @@ public class Player : BaseMonoBehaviour
     public int playerLevel = 1;
     public Camera cam;
 
-    private void OnEnable()
+    private void Awake()
     {
         instance = this;
         _main = MainLogic.main;
+        _main.player = this;
+    }
 
-        _dopUseCd = _useCd;
+    private void OnEnable()
+    {
+        //_dopUseCd = _useCd;
 
         for (int i = 0; i < weapons.Count; i++)
         {
@@ -87,7 +91,7 @@ public class Player : BaseMonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4))
             SelectWeapon(3);
 
-        _dopUseCd -= Time.deltaTime;
+        //_dopUseCd -= Time.deltaTime;
     }
 
     public void UpLevel()
@@ -158,11 +162,6 @@ public class Player : BaseMonoBehaviour
 
     public GameObject CheckIfPlayerSee()
     {
-        //if (_dopUseCd > 0)
-        //    return null;
-
-        //_dopUseCd = _useCd;
-
         var cameraTransform = Camera.main.transform;
         Vector3 playerPos = cameraTransform.position;
         Vector3 playerLook = cameraTransform.forward;
@@ -171,7 +170,6 @@ public class Player : BaseMonoBehaviour
         {
             if (hit.transform.gameObject)
             {
-                print(hit.transform.gameObject.name);
                 return hit.transform.gameObject;
             }
         }

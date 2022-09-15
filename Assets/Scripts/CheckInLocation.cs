@@ -16,9 +16,7 @@ public class CheckInLocation : BaseMonoBehaviour
             return;
 
         if (_main.inLocation is false)
-        {
             _main.inLocation = true;
-        }
         else
             CheckWherePlayer();   
     }
