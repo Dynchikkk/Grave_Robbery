@@ -8,7 +8,7 @@ public class Money : MonoBehaviour
     public int AllMoney
     {
         get => _allMoney;
-        set
+        private set
         {
             if (value < 0)
             {

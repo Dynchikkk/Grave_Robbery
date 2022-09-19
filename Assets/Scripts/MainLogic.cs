@@ -7,13 +7,14 @@ using TMPro;
 
 [RequireComponent(typeof(WinLose))]
 [RequireComponent(typeof(Money))]
+[RequireComponent(typeof(ValuesUI))]
 [RequireComponent(typeof(SceneAndCanvasManager))]
 public class MainLogic : BaseMonoBehaviour
 {
     public static MainLogic main;
     public WinLose winLoose;
     public SceneAndCanvasManager sceneAndCanvasManager;
-    public int money;
+    public Money money;
 
     //events
     public event Action OnLevelSet;
@@ -59,7 +60,7 @@ public class MainLogic : BaseMonoBehaviour
     {
         main = this;
         winLoose = GetComponent<WinLose>();
-        money = GetComponent<Money>().AllMoney;
+        money = GetComponent<Money>();
         sceneAndCanvasManager = GetComponent<SceneAndCanvasManager>();
     }
 

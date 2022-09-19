@@ -138,7 +138,7 @@ public class Player : BaseMonoBehaviour
 
     public void SetLocalToGlobalMoney()
     {
-        _main.money += _playerMoney;
+        _main.money.SetMoney(_playerMoney);
         _playerMoney = 0;
     }
 
@@ -207,7 +207,6 @@ public class Player : BaseMonoBehaviour
             if (weapons[i] == null)
             {
                 weapons[i] = (Weapon)item;
-                _main.money -= item.Cost;
                 InstantiateItem(i);
                 break;
             }

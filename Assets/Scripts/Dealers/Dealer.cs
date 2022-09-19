@@ -44,11 +44,13 @@ public class Dealer : MonoBehaviour
 
     public bool Buy(int num)
     {
-        if (salesSheet[num].Cost > _main.money)
+        if (salesSheet[num].Cost > _main.money.AllMoney)
         {
             print("Not enough money");
             return false;
         }
+
+        _main.money.SetMoney(-salesSheet[num].Cost);
 
         // Получаем номер свободного места в инвентаре игрока
         int lastFreeWeaponPlace = 0;
@@ -88,7 +90,7 @@ public class Dealer : MonoBehaviour
 
         OnSellEvent?.Invoke(salesSheet.Count - 1);
 
-        _main.money += Convert.ToInt32(_player.weapons[num].Cost / sellCoef);
+        _main.money.SetMoney(Convert.ToInt32(_player.weapons[num].Cost / sellCoef));
 
         Destroy(_player.weapons[num].gameObject);
         _player.weapons[num] = null;
@@ -102,7 +104,7 @@ public class Dealer : MonoBehaviour
         if (_player.playerTreasures[num] == null)
             return;
 
-        _main.money += Convert.ToInt32(_player.playerTreasures[num].cost * sellCoefTreasure);
+        _main.money.SetMoney(Convert.ToInt32(_player.playerTreasures[num].cost * sellCoefTreasure));
         _player.playerTreasures[num] = null;
     }
 
