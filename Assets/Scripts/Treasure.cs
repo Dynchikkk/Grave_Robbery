@@ -36,7 +36,7 @@ public class Treasure : BaseMonoBehaviour
 
             _player.OnKeyEInteract -= DugOut;
             _player.AddTreasure(this);
-            GetComponent<MeshRenderer>().enabled = false; 
+            gameObject.GetComponent<MeshRenderer>().enabled = false; 
         }
     }
 }

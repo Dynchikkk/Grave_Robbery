@@ -603,14 +603,14 @@ MonoBehaviour:
   _selectedWeapon: {fileID: 0}
   _inventoryParent: {fileID: 2938091007955903082}
   _expCoefPerLevel: 1.2
-  _expToLevelUp: 10
-  _expPoints: 3
+  _expToLevelUp: 20
+  _expPoints: 0
   _playerMoney: 0
   playerTreasures:
-  - {fileID: 934653353994605289, guid: e87783cc1e20b7b4e9875be96df2db8a, type: 3}
-  - {fileID: 934653353994605289, guid: e87783cc1e20b7b4e9875be96df2db8a, type: 3}
-  - {fileID: 934653353994605289, guid: e87783cc1e20b7b4e9875be96df2db8a, type: 3}
-  - {fileID: 934653353994605289, guid: e87783cc1e20b7b4e9875be96df2db8a, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   playerLevel: 1
   cam: {fileID: 20437472682476688}
 --- !u!1 &1963958859065967600

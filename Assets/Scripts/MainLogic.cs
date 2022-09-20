@@ -15,6 +15,7 @@ public class MainLogic : BaseMonoBehaviour
     public WinLose winLoose;
     public SceneAndCanvasManager sceneAndCanvasManager;
     public Money money;
+    public ValuesUI valuesUI;
 
     //events
     public event Action OnLevelSet;
@@ -61,6 +62,7 @@ public class MainLogic : BaseMonoBehaviour
         main = this;
         winLoose = GetComponent<WinLose>();
         money = GetComponent<Money>();
+        valuesUI = GetComponent<ValuesUI>();
         sceneAndCanvasManager = GetComponent<SceneAndCanvasManager>();
     }
 
@@ -194,13 +196,13 @@ public class MainLogic : BaseMonoBehaviour
         Cursor.visible = !condition;
         if (condition is false)
         {
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
             Cursor.lockState = CursorLockMode.Confined;
             player.RemoveSelectedWeapon();
         }
         else
         {
-            Time.timeScale = 1;
+            //Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.Locked;
             player.SelectDefaultWeapon();
         }

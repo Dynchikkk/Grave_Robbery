@@ -50,8 +50,6 @@ public class Dealer : MonoBehaviour
             return false;
         }
 
-        _main.money.SetMoney(-salesSheet[num].Cost);
-
         // Получаем номер свободного места в инвентаре игрока
         int lastFreeWeaponPlace = 0;
         for (int i = 0; i < _main.player.weapons.Count; i++)
@@ -66,6 +64,9 @@ public class Dealer : MonoBehaviour
         bool buy = _player.SetItem(salesSheet[num]);
         if (buy is false)
             return buy;
+        // Если купили
+
+        _main.money.SetMoney(-salesSheet[num].Cost);
 
         OnBuyEvent?.Invoke(lastFreeWeaponPlace);
 

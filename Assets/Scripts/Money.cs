@@ -21,8 +21,14 @@ public class Money : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        SetMoney(0);
+    }
+
     public void SetMoney(int value)
     {
         AllMoney += value;
+        MainLogic.main.valuesUI.SetMoneyText(value);
     }
 }

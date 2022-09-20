@@ -46,6 +46,8 @@ public class Player : BaseMonoBehaviour
             {
                 UpLevel();
             }
+            _main.valuesUI.SetSliderXp(ExpPoints, _expToLevelUp);
+            _main.valuesUI.SetLevel(playerLevel);
         }
     }
 
@@ -58,12 +60,12 @@ public class Player : BaseMonoBehaviour
         instance = this;
         _main = MainLogic.main;
         _main.player = this;
+        _main.valuesUI.SetSliderXp(ExpPoints, _expToLevelUp);
+        _main.valuesUI.SetLevel(playerLevel);
     }
 
     private void OnEnable()
     {
-        //_dopUseCd = _useCd;
-
         for (int i = 0; i < weapons.Count; i++)
         {
             InstantiateItem(i);
@@ -90,8 +92,6 @@ public class Player : BaseMonoBehaviour
             SelectWeapon(2);
         if (Input.GetKeyDown(KeyCode.Alpha4))
             SelectWeapon(3);
-
-        //_dopUseCd -= Time.deltaTime;
     }
 
     public void UpLevel()
@@ -106,6 +106,7 @@ public class Player : BaseMonoBehaviour
     {
         print("You earn " + exp.ToString() + "exp");
         ExpPoints += exp;
+        _main.valuesUI.SetXpGiveText(exp);
     }
 
     private void UseWeapon()
