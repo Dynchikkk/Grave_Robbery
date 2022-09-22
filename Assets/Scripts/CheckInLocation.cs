@@ -16,7 +16,10 @@ public class CheckInLocation : BaseMonoBehaviour
             return;
 
         if (_main.inLocation is false)
+        {
             _main.inLocation = true;
+            _main.player.SetLocalMoney(0);
+        }
         else
             CheckWherePlayer();   
     }

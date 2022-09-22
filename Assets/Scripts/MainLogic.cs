@@ -80,17 +80,6 @@ public class MainLogic : BaseMonoBehaviour
         {
             LocalTime -= Time.deltaTime;
         }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-            EscapePress();
-    }
-
-    public void EscapePress()
-    {
-        //if (noPause is false)
-        //    return;
-
-        //NoPause(false);
     }
 
     private void SetLevel—haracteristic(int levelNum)
@@ -196,13 +185,11 @@ public class MainLogic : BaseMonoBehaviour
         Cursor.visible = !condition;
         if (condition is false)
         {
-            //Time.timeScale = 0;
             Cursor.lockState = CursorLockMode.Confined;
             player.RemoveSelectedWeapon();
         }
         else
         {
-            //Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.Locked;
             player.SelectDefaultWeapon();
         }

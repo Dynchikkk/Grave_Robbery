@@ -135,6 +135,7 @@ public class Player : BaseMonoBehaviour
     public void SetLocalMoney(int value)
     {
         _playerMoney += value;
+        _main.valuesUI.SetMoneyTextInLocation(value, _playerMoney);
     }
 
     public void SetLocalToGlobalMoney()

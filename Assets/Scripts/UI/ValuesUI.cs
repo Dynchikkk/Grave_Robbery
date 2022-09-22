@@ -6,6 +6,8 @@ using TMPro;
 
 public class ValuesUI : MonoBehaviour
 {
+    private MainLogic _main;
+
     [Header("Money Elements")]
     [SerializeField] private TMP_Text _moneyText;
     [SerializeField] private TMP_Text _moneyGiveText;
@@ -15,13 +17,27 @@ public class ValuesUI : MonoBehaviour
     [SerializeField] private TMP_Text _xpGiveText;
     [SerializeField] private Slider _xpProgress;
 
+    private void Awake()
+    {
+        _main = MainLogic.main;
+    }
+
     public void SetMoneyText(int value)
     {
-        string allMoney = MainLogic.main.money.AllMoney.ToString();
+        string allMoney = _main.money.AllMoney.ToString();
 
         SetGiveMoney(value);
 
         _moneyText.text = allMoney;
+    }
+
+    public void SetMoneyTextInLocation(int value, int plMoney)
+    {
+        string allMoneyText = plMoney.ToString();
+
+        SetGiveMoney(value);
+
+        _moneyText.text = allMoneyText;
     }
 
     public void SetGiveMoney(int value)
