@@ -32,9 +32,10 @@ public abstract class GraveLayer : BaseMonoBehaviour
         print(Health);
     }
 
-    protected virtual float RecalculateDamage(float damage)
+    public virtual float RecalculateDamage(float damage)
     {
-        return damage - damage * Resistance;
+        float dam = damage - damage * Resistance;
+        return dam;
     }
 
     protected virtual void DigOut()

@@ -8,6 +8,9 @@ public class ValuesUI : MonoBehaviour
 {
     private MainLogic _main;
 
+    [Header("Damage Elements")]
+    [SerializeField] private DamageVisible damageVisible;
+
     [Header("Money Elements")]
     [SerializeField] private TMP_Text _moneyText;
     [SerializeField] private TMP_Text _moneyGiveText;
@@ -79,5 +82,12 @@ public class ValuesUI : MonoBehaviour
     public void SetLevel(int num)
     {
         _level.text = num.ToString();
+    }
+
+    public void InstantiateDamageVisual(Transform clickPosition, int damage)
+    {
+        DamageVisible link = Instantiate(damageVisible, clickPosition);
+
+        link.SetText(damage);
     }
 }

@@ -8880,9 +8880,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1967829029}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73e68c055339d8d4f98437957602c5a4, type: 3}
+  m_Script: {fileID: 11500000, guid: 94f86a9819eaaa14fbb1de43a614950a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageVisible: {fileID: 2353631722355299509, guid: 566721df6809c6f48ba626bfd25e6e2d, type: 3}
   _moneyText: {fileID: 369541858}
   _moneyGiveText: {fileID: 1511969471}
   _level: {fileID: 1759203823}
